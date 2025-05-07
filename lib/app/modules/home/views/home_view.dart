@@ -1,4 +1,3 @@
-// Update imports from letter_of_love to buyzaars
 import 'package:buyzaars/utilities/colors.dart';
 import 'package:buyzaars/app/modules/bottom_nav/controllers/bottom_nav_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
