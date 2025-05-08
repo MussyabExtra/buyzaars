@@ -76,7 +76,7 @@ class CartController extends GetxController {
         return;
       }
       await woocommerce.addToMyCart(
-          itemId: productId.toString(), quantity: '1');
+          itemId: productId.toString(), quantity: '1',);
       await fetchCartItems();
       Get.back();
       Get.snackbar("Added to Cart", "Product added to cart successfully.",

@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:buyzaars/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wp_woocommerce/models/products.dart';
 import 'package:flutter_wp_woocommerce/utilities/local_db.dart';
+import 'package:flutter_wp_woocommerce/woocommerce.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:buyzaars/api_key.dart';
@@ -15,11 +17,15 @@ class HomeController extends GetxController {
   RxBool isLoading = false.obs;
   var products = <Product>[].obs;
   Map<String, dynamic>? retrievedData;
+  var allproducts = <WooProduct>[].obs;
+  var allcategories = <WooProductCategory>[].obs;
   var currentBanner = 0.obs;
 
   void onInit() async {
     await getDataFromSharedPreferences();
-    fetchProductsByCategoryId();
+    getProducts();
+    getCategories();
+    // fetchProductsByCategoryId();
     super.onInit();
   }
 
@@ -35,6 +41,28 @@ class HomeController extends GetxController {
     Get.snackbar("Logout Successful", "You have been logged out.",
         backgroundColor: AppColor.red, colorText: Colors.white);
     Get.offAllNamed('/login');
+  }
+
+  Future<void> getProducts() async {
+    try {
+      final products = await woocommerce.getProducts(perPage: 20);
+      allproducts.value = products;
+      // ignore: invalid_use_of_protected_member
+      print("Fetched Products: ${allproducts.value.toString()}");
+    } catch (e) {
+      print("Error fetching products: $e");
+    }
+  }
+
+  Future<void> getCategories() async {
+    try {
+      final categories = await woocommerce.getProductCategories(perPage: 20);
+      allcategories.value = categories;
+      // ignore: invalid_use_of_protected_member
+      print("Fetched Categories: ${allcategories.value.toString()}");
+    } catch (e) {
+      print("Error fetching allcategories: $e");
+    }
   }
 
   Future<void> fetchProductsByCategoryId() async {

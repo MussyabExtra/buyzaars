@@ -18,20 +18,20 @@ class ProfileView extends GetView<ProfileController> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
-            color: AppColor.white,
           ),
+        ),
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(Icons.arrow_back, color: AppColor.white),
         ),
         centerTitle: true,
         backgroundColor: AppColor.red,
-        elevation: 0,
-        leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: Icon(Icons.arrow_back, color: AppColor.white)),
+        foregroundColor: AppColor.white,
       ),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: AppColor.WhitebackgroundGradient,
+          color: AppColor.white,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
         child: Column(
@@ -43,7 +43,7 @@ class ProfileView extends GetView<ProfileController> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppColor.white,
+                color: AppColor.black,
               ),
             ),
             SizedBox(height: 20),
@@ -54,7 +54,7 @@ class ProfileView extends GetView<ProfileController> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w200,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             SizedBox(height: 8),
@@ -64,7 +64,7 @@ class ProfileView extends GetView<ProfileController> {
                 enabled: false,
                 labelStyle: TextStyle(color: Color(0xFFB8B8B8)),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Colors.grey.shade200,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
@@ -82,7 +82,7 @@ class ProfileView extends GetView<ProfileController> {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w200,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             SizedBox(height: 8),
@@ -95,7 +95,7 @@ class ProfileView extends GetView<ProfileController> {
                     labelStyle: TextStyle(color: Color(0xFFB8B8B8)),
                     filled: true,
                     enabled: false,
-                    fillColor: Colors.white,
+                    fillColor: Colors.grey.shade200,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide.none,
@@ -104,7 +104,9 @@ class ProfileView extends GetView<ProfileController> {
                         EdgeInsets.symmetric(vertical: 16, horizontal: 15),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                   ),
-                  style: TextStyle(color: AppColor.red),
+                  style: TextStyle(
+                    color: AppColor.red,
+                  ),
                 ),
                 Positioned(
                   right: 0,
@@ -150,7 +152,7 @@ class ProfileView extends GetView<ProfileController> {
                                           color: Color(0xFFB8B8B8),
                                         ),
                                         filled: true,
-                                        fillColor: AppColor.white,
+                                        fillColor: Colors.grey.shade200,
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
@@ -176,7 +178,7 @@ class ProfileView extends GetView<ProfileController> {
                                           color: Color(0xFFB8B8B8),
                                         ),
                                         filled: true,
-                                        fillColor: AppColor.red,
+                                        fillColor: Colors.grey.shade200,
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
@@ -210,7 +212,7 @@ class ProfileView extends GetView<ProfileController> {
                                           color: Color(0xFFB8B8B8),
                                         ),
                                         filled: true,
-                                        fillColor: AppColor.red,
+                                        fillColor: Colors.grey.shade200,
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {

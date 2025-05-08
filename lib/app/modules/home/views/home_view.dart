@@ -1,13 +1,17 @@
+import 'package:buyzaars/app/routes/app_pages.dart';
 import 'package:buyzaars/utilities/colors.dart';
 import 'package:buyzaars/app/modules/bottom_nav/controllers/bottom_nav_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:buyzaars/widgets/productDetailModal.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   HomeView({super.key});
+  //Scaffold Key
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final BottomNavController bcontroller = Get.find<BottomNavController>();
   final items = [
@@ -15,79 +19,200 @@ class HomeView extends GetView<HomeController> {
     "assets/images/banner-2.webp",
     "assets/images/banner-3.webp",
   ];
-  final List<Map<String, dynamic>> products = [
-    {
-      "name": "The Great Gatsby",
-      "price": "10.99",
-      "image": "assets/images/Book-1.png",
-    },
-    {
-      "name": "Becoming",
-      "price": "19.99",
-      "image": "assets/images/Book-3.png",
-    },
-    {
-      "name": "Atomic Habits",
-      "price": "15.99",
-      "image": "assets/images/Book-2.png",
-    },
-    {
-      "name": "Sapiens: A Brief History of Humankind",
-      "price": "18.50",
-      "image": "assets/images/Book-1.png",
-    },
-    {
-      "name": "Educated",
-      "price": "14.99",
-      "image": "assets/images/Book-3.png",
-    },
-    {
-      "name": "The Power of Now",
-      "price": "12.99",
-      "image": "assets/images/Book-2.png",
-    },
-    {
-      "name": "The Catcher in the Rye",
-      "price": "9.99",
-      "image": "assets/images/Book-1.png",
-    },
-    {
-      "name": "1984",
-      "price": "13.99",
-      "image": "assets/images/Book-3.png",
-    },
-    {
-      "name": "The Alchemist",
-      "price": "11.99",
-      "image": "assets/images/Book-1.png",
-    },
-  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
       child: Scaffold(
+        endDrawerEnableOpenDragGesture: false,
+        key: scaffoldKey,
+        appBar: AppBar(
+            automaticallyImplyLeading: F,
+            backgroundColor: AppColor.white,
+            elevation: 0,
+            title: Image.asset("assets/images/logo.png"),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: AppColor.red,
+                ),
+                onPressed: () {
+                  scaffoldKey.currentState?.openDrawer();
+                },
+              ),
+            ]),
+        drawer: Drawer(
+          child: Column(
+            children: [
+              DrawerHeader(
+                padding: EdgeInsets.fromLTRB(16, 40, 16, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      "assets/images/logo.png",
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Welcome to Buyzaars',
+                      style: TextStyle(
+                        color: AppColor.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.home_outlined, color: AppColor.red),
+                      title: Text(
+                        'Home',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.back();
+                        bcontroller.tabIndex.value = 0;
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.shopping_bag_outlined,
+                          color: AppColor.red),
+                      title: Text(
+                        'Shop',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.back();
+                        bcontroller.tabIndex.value = 1;
+                      },
+                    ),
+                    ListTile(
+                      leading:
+                          Icon(Icons.category_outlined, color: AppColor.red),
+                      title: Text(
+                        'Categories',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed('/all-categories');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.person_outline, color: AppColor.red),
+                      title: Text(
+                        'Profile',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.back();
+                        bcontroller.tabIndex.value = 3;
+                      },
+                    ),
+                    Divider(color: Colors.grey.withOpacity(0.3)),
+                    ListTile(
+                      leading: Icon(Icons.info_outline, color: AppColor.red),
+                      title: Text(
+                        'About Us',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.toNamed('/about-author');
+                        // Handle About Us navigation
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.contact_support_outlined,
+                          color: AppColor.red),
+                      title: Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.toNamed('/privacy-policy');
+                        // Handle Contact Us navigation
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Version 1.0.0',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         body: Container(
           height: double.infinity,
           decoration: BoxDecoration(
-            gradient: AppColor.WhitebackgroundGradient,
+            color: AppColor.white,
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 50,
-                    left: 16,
-                    right: 15,
-                  ),
-                  child: Text(
-                    'Welcome! \nTo Buyzaars Store',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.white,
+                  padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                  child: FocusScope(
+                    node: FocusScopeNode(),
+                    child: GestureDetector(
+                      onTap: () => Get.toNamed('/search-product'),
+                      child: AbsorbPointer(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: 'Search products...',
+                            hintStyle: TextStyle(
+                              color: Color(0xFFB8B8B8),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Color(0xFFB8B8B8),
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey.shade200,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          style: TextStyle(
+                            color: AppColor.red,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -95,7 +220,7 @@ class HomeView extends GetView<HomeController> {
                   options: cs.CarouselOptions(
                     autoPlay: true,
                     viewportFraction: 1.0,
-                    height: 280,
+                    height: 220,
                     onPageChanged: (index, reason) =>
                         controller.currentBanner.value = index,
                   ),
@@ -103,7 +228,7 @@ class HomeView extends GetView<HomeController> {
                   itemBuilder: (context, index, realIndex) => Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(
-                        top: 25, left: 15, right: 15, bottom: 25),
+                        top: 10, left: 15, right: 15, bottom: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -131,7 +256,7 @@ class HomeView extends GetView<HomeController> {
                             shape: BoxShape.circle,
                             color: (controller.currentBanner.value == entry.key)
                                 ? AppColor.red
-                                : AppColor.white,
+                                : AppColor.black,
                           ),
                         );
                       }),
@@ -140,19 +265,124 @@ class HomeView extends GetView<HomeController> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 15, left: 15, right: 15, bottom: 25),
+                      top: 10, left: 15, right: 15, bottom: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Latest Books",
+                            "Shop By Category",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: AppColor.white,
+                              color: AppColor.black,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Get.toNamed('/all-categories');
+                            },
+                            child: Text(
+                              "See All",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColor.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15),
+                      Obx(() {
+                        if (controller.allcategories.isEmpty) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.black,
+                            ),
+                          );
+                        }
+
+                        // Take only first 5 categories
+                        final displayCategories =
+                            controller.allcategories.take(5).toList();
+
+                        return Column(
+                          children: [
+                            // First row with 40-60 split
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 4, // 40% width
+                                  child: CategoryBox(
+                                    title: displayCategories[0].name ?? '',
+                                    image: displayCategories[0].image?.src ??
+                                        'assets/images/placeholder.png',
+                                    onTap: () {
+                                      Get.toNamed(Routes.CATEGORY_PRODUCTS,
+                                          arguments: {
+                                            'categoryId':
+                                                displayCategories[0].id,
+                                          });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Expanded(
+                                  flex: 6, // 60% width
+                                  child: CategoryBox(
+                                    title: displayCategories[1].name ?? '',
+                                    image: displayCategories[1].image?.src ??
+                                        'assets/images/placeholder.png',
+                                    onTap: () {
+                                      Get.toNamed(Routes.CATEGORY_PRODUCTS,
+                                          arguments: {
+                                            'categoryId':
+                                                displayCategories[1].id,
+                                          });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            // Second row with three equal boxes
+                            Row(
+                              children: [
+                                for (var i = 2; i < 5; i++) ...[
+                                  if (i > 2) SizedBox(width: 10),
+                                  Expanded(
+                                    child: CategoryBox(
+                                      title: displayCategories[i].name ?? '',
+                                      image: displayCategories[i].image?.src ??
+                                          'assets/images/placeholder.png',
+                                      onTap: () {
+                                        Get.toNamed(Routes.CATEGORY_PRODUCTS,
+                                            arguments: {
+                                              'categoryId':
+                                                  displayCategories[i].id,
+                                            });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ],
+                        );
+                      }),
+                      SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Latest Products",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.black,
                             ),
                           ),
                           TextButton(
@@ -162,8 +392,7 @@ class HomeView extends GetView<HomeController> {
                             child: Text(
                               "See All",
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
                                 color: AppColor.red,
                               ),
                             ),
@@ -171,44 +400,58 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                       SizedBox(
-                        height: 300,
+                        height: 260,
                         child: Obx(() {
                           // Ensure the products list is loaded and not empty
-                          if (controller.products.isEmpty) {
+                          if (controller.allproducts.isEmpty) {
                             return Center(
                                 child: CircularProgressIndicator(
-                              color: AppColor.red,
+                              color: AppColor.black,
                             ));
                           }
                           return ListView.builder(
-                            padding: EdgeInsets.only(top: 20),
+                            // padding: EdgeInsets.only(top: 20),
                             shrinkWrap: true,
-                            itemCount: controller.products.length,
+                            itemCount: controller.allproducts.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              var product = controller.products[index];
-                              print(product.images[0].src);
+                              var product = controller.allproducts[index];
+                              // print(product.images.first);
                               print(product.name);
                               print(product.shortDescription);
                               print(product.price);
-                              print(controller.products.length);
+                              print(controller.allproducts.length);
                               if (controller.isLoading.value) {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
                               }
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 20),
+                              return Container(
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(
+                                    top: 10, left: 2, right: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: AppColor.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 2,
+                                      offset: Offset(0, 1),
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 child: GestureDetector(
                                   onTap: () {
+                                    print(product.description.toString());
                                     productDetailsModal(
                                       context: context,
-                                      imageUrl: product.images[0].src,
-                                      productName: product.name,
-                                      productDescription: product.description,
-                                      authorName: "Jack Ma",
-                                      authorDescription:
-                                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                                      imageUrl:
+                                          product.images[0].src.toString(),
+                                      productName: product.name.toString(),
+                                      productDescription:
+                                          product.description.toString(),
                                       price: "\$${product.price}",
                                       id: product.id,
                                     );
@@ -219,14 +462,16 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Container(
                                         width: 150,
-                                        height: 200,
+                                        height: 150,
                                         decoration: BoxDecoration(
+                                          color: AppColor.red.withOpacity(0.1),
                                           borderRadius:
-                                              BorderRadius.circular(15),
+                                              BorderRadius.circular(10),
                                           image: DecorationImage(
-                                            image: NetworkImage(
-                                                product.images[0].src),
-                                            fit: BoxFit.fill,
+                                            image: NetworkImage(product
+                                                .images[0].src
+                                                .toString()),
+                                            fit: BoxFit.contain,
                                           ),
                                         ),
                                       ),
@@ -234,11 +479,10 @@ class HomeView extends GetView<HomeController> {
                                       Container(
                                         width: 150,
                                         child: Text(
-                                          product.name,
+                                          product.name.toString(),
                                           style: TextStyle(
                                             fontSize: 15,
-                                            color: AppColor.white,
-                                            fontWeight: FontWeight.bold,
+                                            color: AppColor.black,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                           overflow: TextOverflow.ellipsis,
@@ -252,7 +496,7 @@ class HomeView extends GetView<HomeController> {
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
-                                          color: AppColor.red,
+                                          color: AppColor.black,
                                         ),
                                       ),
                                     ],
@@ -262,83 +506,6 @@ class HomeView extends GetView<HomeController> {
                             },
                           );
                         }),
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Shop By Category",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.white,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              bcontroller.tabIndex.value = 1;
-                            },
-                            child: Text(
-                              "See All",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.red,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 4, // 40% width
-                            child: CategoryBox(
-                              title: "Coats & Jackets",
-                              image: "assets/images/category-1.webp",
-                              onTap: () {},
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            flex: 6, // 60% width
-                            child: CategoryBox(
-                              title: "Men's Fashion",
-                              image: "assets/images/category-2.webp",
-                              onTap: () {},
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CategoryBox(
-                              title: "Casual Wear",
-                              image: "assets/images/category-3.webp",
-                              onTap: () {},
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: CategoryBox(
-                              title: "Watches",
-                              image: "assets/images/category-4.webp",
-                              onTap: () {},
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: CategoryBox(
-                              title: "Shoes",
-                              image: "assets/images/category-5.webp",
-                              onTap: () {},
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),
@@ -373,7 +540,7 @@ class CategoryBox extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           image: DecorationImage(
-            image: AssetImage(image),
+            image: NetworkImage(image),
             fit: BoxFit.cover,
           ),
         ),

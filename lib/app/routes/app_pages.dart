@@ -4,10 +4,14 @@ import '../modules/about_author/bindings/about_author_binding.dart';
 import '../modules/about_author/views/about_author_view.dart';
 import '../modules/account/bindings/account_binding.dart';
 import '../modules/account/views/account_view.dart';
+import '../modules/all_categories/bindings/all_categories_binding.dart';
+import '../modules/all_categories/views/all_categories_view.dart';
 import '../modules/bottom_nav/bindings/bottom_nav_binding.dart';
 import '../modules/bottom_nav/views/bottom_nav_view.dart';
 import '../modules/cart/bindings/cart_binding.dart';
 import '../modules/cart/views/cart_view.dart';
+import '../modules/category_products/bindings/category_products_binding.dart';
+import '../modules/category_products/views/category_products_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
@@ -99,7 +103,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ACCOUNT,
-      page: () =>  AccountView(),
+      page: () => AccountView(),
       binding: AccountBinding(),
     ),
     GetPage(
@@ -141,6 +145,16 @@ class AppPages {
       name: _Paths.MY_ORDERS,
       page: () => const MyOrdersView(),
       binding: MyOrdersBinding(),
+    ),
+    GetPage(
+      name: _Paths.ALL_CATEGORIES,
+      page: () => const AllCategoriesView(),
+      binding: AllCategoriesBinding(),
+    ),
+    GetPage(
+      name: _Paths.CATEGORY_PRODUCTS,
+      page: () => const CategoryProductsView(),
+      binding: CategoryProductsBinding(),
     ),
   ];
 }

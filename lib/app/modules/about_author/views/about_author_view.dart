@@ -11,7 +11,7 @@ class AboutAuthorView extends GetView<AboutAuthorController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'About Author',
+          'About Us',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -22,13 +22,14 @@ class AboutAuthorView extends GetView<AboutAuthorController> {
         backgroundColor: AppColor.red,
         elevation: 0,
         leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: Icon(Icons.arrow_back, color: AppColor.white)),
+          onPressed: () => Get.back(),
+          icon: Icon(Icons.arrow_back, color: AppColor.white),
+        ),
       ),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: AppColor.WhitebackgroundGradient,
+          color: AppColor.white,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -37,20 +38,12 @@ class AboutAuthorView extends GetView<AboutAuthorController> {
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   children: [
-                    SizedBox(height: 10),
-                    Text(
-                      'About Us',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColor.white,
-                      ),
-                    ),
                     SizedBox(height: 6),
                     Text(
                       'Buyzaars Store',
                       style: TextStyle(
                         fontSize: 20,
-                        color: AppColor.white,
+                        color: AppColor.black,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -60,7 +53,7 @@ class AboutAuthorView extends GetView<AboutAuthorController> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: AppColor.white,
+                        color: AppColor.black,
                       ),
                     ),
                     SizedBox(height: 20),
@@ -69,7 +62,7 @@ class AboutAuthorView extends GetView<AboutAuthorController> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: AppColor.white,
+                        color: AppColor.black,
                       ),
                     ),
                   ],

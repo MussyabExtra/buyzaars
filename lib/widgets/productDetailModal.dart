@@ -12,13 +12,11 @@ productDetailsModal({
   required String imageUrl,
   required String productName,
   required String productDescription,
-  required String authorName,
-  required String authorDescription,
   required String price,
 }) {
   final BottomNavController bcontroller = Get.find<BottomNavController>();
   return showModalBottomSheet(
-    backgroundColor: AppColor.primarycolor,
+    backgroundColor: AppColor.white,
     barrierColor: Colors.red.withOpacity(0.5),
     isScrollControlled: true,
     enableDrag: true,
@@ -33,7 +31,7 @@ productDetailsModal({
       return Container(
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: AppColor.primarycolor,
+          color: AppColor.white,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
@@ -80,7 +78,7 @@ productDetailsModal({
                           style: {
                             "body": Style(
                               color: AppColor.black,
-                              fontSize: FontSize(18),
+                              fontSize: FontSize(12),
                               textAlign: TextAlign.start,
                               fontWeight: FontWeight.w400,
                               padding: HtmlPaddings(
@@ -91,65 +89,65 @@ productDetailsModal({
                               ),
                             ),
                           }),
-                      Row(
-                        children: [
-                          RatingBarIndicator(
-                            rating: 4.0,
-                            itemBuilder: (context, index) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            itemCount: 5,
-                            itemSize: 20,
-                            direction: Axis.horizontal,
-                          ),
-                          const SizedBox(width: 4),
-                          const Text(
-                            '(4.0)',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppColor.black,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     RatingBarIndicator(
+                      //       rating: 4.0,
+                      //       itemBuilder: (context, index) => const Icon(
+                      //         Icons.star,
+                      //         color: Colors.amber,
+                      //       ),
+                      //       itemCount: 5,
+                      //       itemSize: 20,
+                      //       direction: Axis.horizontal,
+                      //     ),
+                      //     const SizedBox(width: 4),
+                      //     const Text(
+                      //       '(4.0)',
+                      //       style: TextStyle(
+                      //         fontSize: 12,
+                      //         color: AppColor.black,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       SizedBox(height: 20),
-                      Text(
-                        "About Author: ",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        authorDescription,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        softWrap: true,
-                      ),
-                      GestureDetector(
-                        onTap: () => Get.toNamed("/about-author"),
-                        child: Text(
-                          'Read More',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.black,
-                            decoration: TextDecoration.combine(
-                                [TextDecoration.underline]),
-                            decorationStyle: TextDecorationStyle.solid,
-                            decorationColor: Colors.black,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
+                      // Text(
+                      //   "About Author: ",
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: Colors.black,
+                      //   ),
+                      // ),
+                      // SizedBox(height: 10),
+                      // Text(
+                      //   authorDescription,
+                      //   style: TextStyle(
+                      //     fontSize: 15,
+                      //     color: Colors.black,
+                      //   ),
+                      //   maxLines: 5,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   textAlign: TextAlign.left,
+                      //   softWrap: true,
+                      // ),
+                      // GestureDetector(
+                      //   onTap: () => Get.toNamed("/about-author"),
+                      //   child: Text(
+                      //     'Read More',
+                      //     style: TextStyle(
+                      //       fontSize: 15,
+                      //       fontWeight: FontWeight.bold,
+                      //       color: AppColor.black,
+                      //       decoration: TextDecoration.combine(
+                      //           [TextDecoration.underline]),
+                      //       decorationStyle: TextDecorationStyle.solid,
+                      //       decorationColor: Colors.black,
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(height: 20),
                       SizedBox(width: 10),
                       Text(
                         price,

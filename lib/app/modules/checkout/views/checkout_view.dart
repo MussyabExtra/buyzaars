@@ -13,7 +13,7 @@ class CheckoutView extends GetView<CheckoutController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primarycolor,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         title: Text(
           'Checkout',
@@ -49,7 +49,7 @@ class CheckoutView extends GetView<CheckoutController> {
                     color: Color(0xFFB8B8B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.grey.shade200,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -74,7 +74,7 @@ class CheckoutView extends GetView<CheckoutController> {
                     color: Color(0xFFB8B8B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.grey.shade200,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -99,7 +99,7 @@ class CheckoutView extends GetView<CheckoutController> {
                     color: Color(0xFFB8B8B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.grey.shade200,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -129,7 +129,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           color: Color(0xFFB8B8B8),
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.grey.shade200,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
@@ -157,7 +157,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           color: Color(0xFFB8B8B8),
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Colors.grey.shade200,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide.none,
@@ -186,7 +186,7 @@ class CheckoutView extends GetView<CheckoutController> {
                     color: Color(0xFFB8B8B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.grey.shade200,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -211,7 +211,7 @@ class CheckoutView extends GetView<CheckoutController> {
                     color: Color(0xFFB8B8B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.grey.shade200,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,
@@ -246,7 +246,7 @@ class CheckoutView extends GetView<CheckoutController> {
                     color: Color(0xFFB8B8B8),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.grey.shade200,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide.none,

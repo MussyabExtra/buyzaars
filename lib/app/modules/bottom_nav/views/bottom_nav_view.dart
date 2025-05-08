@@ -78,7 +78,7 @@ class BottomNavView extends GetView<BottomNavController> {
                         size: 20.0,
                       ),
                     ),
-                    label: 'Books',
+                    label: 'Products',
                     //backgroundColor: AppColor.red,
                   ),
                   BottomNavigationBarItem(

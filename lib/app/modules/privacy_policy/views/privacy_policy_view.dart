@@ -22,13 +22,14 @@ class PrivacyPolicyView extends StatelessWidget {
         backgroundColor: AppColor.red,
         elevation: 0,
         leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: Icon(Icons.arrow_back, color: AppColor.white)),
+          onPressed: () => Get.back(),
+          icon: Icon(Icons.arrow_back, color: AppColor.white),
+        ),
       ),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: AppColor.WhitebackgroundGradient,
+          color: AppColor.white,
         ),
         child: SingleChildScrollView(
           padding: EdgeInsets.all(25),
@@ -39,7 +40,7 @@ class PrivacyPolicyView extends StatelessWidget {
                 'Privacy Policy',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: AppColor.white,
+                  color: AppColor.black,
                   fontSize: 20,
                 ),
               ),
@@ -62,7 +63,7 @@ class PrivacyPolicyView extends StatelessWidget {
                 '• Find and prevent fraud',
                 style: TextStyle(
                   fontSize: 16,
-                  color: AppColor.white,
+                  color: AppColor.black,
                   height: 1.5,
                 ),
               ),

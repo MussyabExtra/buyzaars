@@ -1,7 +1,7 @@
 import 'package:flutter_wp_woocommerce/woocommerce.dart';
 
 WooCommerce woocommerce = WooCommerce(
-  baseUrl: "https://buyzaars.com/",
-  consumerKey: "ck_bf9e450d14953b42227183ce2efa30d65ef37ba3",
-  consumerSecret: "cs_069394a9af9798673df53066f7ed00d5c8fd9d96",
+  baseUrl: "https://buyzaars.com",
+  consumerKey: "ck_615ef0675885e9b4556074cf67697b9b781ccb26",
+  consumerSecret: "cs_bddbe69aee07bda0fddd8df2f53cb3daf55fe872",
 );

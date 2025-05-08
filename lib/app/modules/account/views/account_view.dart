@@ -14,39 +14,33 @@ class AccountView extends GetView<AccountController> {
     return SafeArea(
       top: false,
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: Text(
-        //     'My Account',
-        //     style: TextStyle(
-        //       fontWeight: FontWeight.bold,
-        //       fontSize: 16,
-        //       color: AppColor.black,
-        //     ),
-        //   ),
-        // centerTitle: true,
-        // backgroundColor: Color(0xFFdddcdc),
-        // elevation: 0,
-        // ),
+        appBar: AppBar(
+          title: Text(
+            'My Account',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          // leading: IconButton(
+          //   onPressed: () => Get.back(),
+          //   icon: Icon(Icons.arrow_back, color: AppColor.white),
+          // ),
+          centerTitle: false,
+          backgroundColor: AppColor.red,
+          foregroundColor: AppColor.white,
+        ),
         body: Container(
           height: double.infinity,
           padding: EdgeInsets.only(top: 20),
           decoration: BoxDecoration(
-            gradient: AppColor.WhitebackgroundGradient,
+            color: AppColor.white,
           ),
           child: Padding(
             padding: EdgeInsets.all(25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  'My Account',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.white,
-                  ),
-                ),
-                SizedBox(height: 30),
                 Align(
                   alignment: Alignment.center,
                   child: Container(
@@ -83,14 +77,14 @@ class AccountView extends GetView<AccountController> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: AppColor.white,
+                                color: AppColor.black,
                               ),
                             ),
                             Spacer(),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: 18,
-                              color: AppColor.white,
+                              color: AppColor.black,
                             ),
                           ],
                         ),
@@ -113,14 +107,14 @@ class AccountView extends GetView<AccountController> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: AppColor.white,
+                                color: AppColor.black,
                               ),
                             ),
                             Spacer(),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: 18,
-                              color: AppColor.white,
+                              color: AppColor.black,
                             ),
                           ],
                         ),
@@ -143,14 +137,14 @@ class AccountView extends GetView<AccountController> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: AppColor.white,
+                                color: AppColor.black,
                               ),
                             ),
                             Spacer(),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: 18,
-                              color: AppColor.white,
+                              color: AppColor.black,
                             ),
                           ],
                         ),
@@ -173,14 +167,14 @@ class AccountView extends GetView<AccountController> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: AppColor.white,
+                                color: AppColor.black,
                               ),
                             ),
                             Spacer(),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: 18,
-                              color: AppColor.white,
+                              color: AppColor.black,
                             ),
                           ],
                         ),

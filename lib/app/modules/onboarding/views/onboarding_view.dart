@@ -16,14 +16,14 @@ class OnboardingView extends GetView<OnboardingController> {
           // Background Image
           Positioned.fill(
             child: Image(
-              image: AssetImage('assets/images/onboarding-1.jpg'),
+              image: AssetImage('assets/images/onboarding-3.jpg'),
               fit: BoxFit.cover,
             ),
           ),
           // Overlay
           Positioned.fill(
             child: Container(
-              color: AppColor.black.withOpacity(0.9),
+              color: AppColor.black.withOpacity(0.8),
             ),
           ),
           Column(

@@ -8,71 +8,30 @@ class MyOrdersView extends GetView<MyOrdersController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (controller.isLoading.value) {
-        return Scaffold(
-          backgroundColor: AppColor.primarycolor,
-          appBar: AppBar(
-            title: Text(
-              'My Orders',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            centerTitle: true,
-            backgroundColor: AppColor.red,
-            foregroundColor: AppColor.white,
+    return Scaffold(
+      backgroundColor: AppColor.secondaryColor,
+      appBar: AppBar(
+        title: Text(
+          'My Orders',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
-          body: SizedBox(
-            child: Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColor.red),
-              ),
-            ),
-          ),
-        );
-      }
-
-      if (controller.allorders.isEmpty) {
-        return Scaffold(
-          backgroundColor: AppColor.primarycolor,
-          appBar: AppBar(
-            title: Text(
-              'My Orders',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            centerTitle: true,
-            backgroundColor: AppColor.red,
-            foregroundColor: AppColor.white,
-          ),
-          body: Center(
-            child: Text(
-              'No orders found',
-              style: TextStyle(color: AppColor.black),
-            ),
-          ),
-        );
-      }
-
-      return Scaffold(
-        backgroundColor: AppColor.secondaryColor,
-        appBar: AppBar(
-          title: Text(
-            'My Orders',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColor.red,
-          foregroundColor: AppColor.white,
         ),
-        body: FocusScope(
+        centerTitle: true,
+        backgroundColor: AppColor.red,
+        foregroundColor: AppColor.white,
+      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(AppColor.red),
+            ),
+          );
+        }
+
+        return FocusScope(
           node: FocusScopeNode(),
           child: SingleChildScrollView(
             padding: EdgeInsets.all(25),
@@ -85,7 +44,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
                     itemBuilder: (context, index) {
                       final order = controller.allorders[index];
                       return Card(
-                        color: AppColor.primarycolor,
+                        color: AppColor.secondaryColor,
                         margin: EdgeInsets.only(bottom: 16),
                         elevation: 2,
                         child: Row(
@@ -188,8 +147,8 @@ class MyOrdersView extends GetView<MyOrdersController> {
               ],
             ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

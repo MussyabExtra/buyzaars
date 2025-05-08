@@ -11,27 +11,30 @@ class CartView extends GetView<CartController> {
     return SafeArea(
       top: false,
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Cart',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          // leading: IconButton(
+          //   onPressed: () => Get.back(),
+          //   icon: Icon(Icons.arrow_back, color: AppColor.white),
+          // ),
+          centerTitle: false,
+          backgroundColor: AppColor.red,
+          foregroundColor: AppColor.white,
+        ),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
             height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: AppColor.WhitebackgroundGradient,
-            ),
             padding: EdgeInsets.all(25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: MediaQuery.of(context).padding.top + 10),
-                Text(
-                  "Cart",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.white,
-                  ),
-                ),
-                SizedBox(height: 20),
                 Expanded(
                   child: Obx(() {
                     if (controller.isLoading.value) {
@@ -90,7 +93,7 @@ class CartView extends GetView<CartController> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Container(
-                                    height: 120,
+                                    height: 80,
                                     width: 80,
                                     child: Image.network(
                                       item.images!.first.src ??
@@ -117,6 +120,7 @@ class CartView extends GetView<CartController> {
                                         item.name ?? '',
                                         style: TextStyle(
                                           fontSize: 16,
+                                          color: AppColor.red,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         maxLines: 2,
@@ -127,8 +131,7 @@ class CartView extends GetView<CartController> {
                                         '\$${(double.parse(item.price.toString()) / 100).toStringAsFixed(2)}',
                                         style: TextStyle(
                                           fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColor.red,
+                                          color: AppColor.black,
                                         ),
                                       ),
                                     ],
@@ -184,6 +187,7 @@ class CartView extends GetView<CartController> {
                               'Proceed to Checkout',
                               style: TextStyle(
                                 fontSize: 16,
+                                color: AppColor.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

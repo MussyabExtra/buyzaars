@@ -1,0 +1,2 @@
+C:/Users/Mussayab/Documents/GitHub/buyzaars/android/app/.cxx/Debug/15303f1n/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Mussayab/Documents/GitHub/buyzaars/android/app/.cxx/Debug/15303f1n/x86_64/CMakeFiles/rebuild_cache.dir

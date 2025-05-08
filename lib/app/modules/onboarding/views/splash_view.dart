@@ -13,8 +13,10 @@ class SplashView extends GetView {
         children: [
           SizedBox(
             width: double.infinity,
-            child: Image.asset("assets/images/splash_screen.webp",
-                fit: BoxFit.fill),
+            child: Image.asset(
+              "assets/images/splash_screen.webp",
+              fit: BoxFit.fill,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 90),
@@ -26,7 +28,9 @@ class SplashView extends GetView {
                   children: [
                     const Text(
                       "Don't have an account?",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: AppColor.black,
+                      ),
                     ),
                     GestureDetector(
                       onTap: () async {
@@ -38,6 +42,7 @@ class SplashView extends GetView {
                       child: const Text(
                         ' Sign up',
                         style: TextStyle(
+                          fontSize: 16,
                           color: AppColor.red,
                           fontWeight: FontWeight.bold,
                         ),
@@ -53,19 +58,19 @@ class SplashView extends GetView {
                     child: Container(
                         margin: const EdgeInsets.only(left: 100.0, right: 10.0),
                         child: const Divider(
-                          color: Colors.white,
+                          color: Colors.black,
                           height: 22,
                         )),
                   ),
                   const Text(
                     'Or login with',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                   Expanded(
                     child: Container(
                         margin: const EdgeInsets.only(left: 10.0, right: 100.0),
                         child: const Divider(
-                          color: Colors.white,
+                          color: Colors.black,
                           height: 22,
                         )),
                   ),
@@ -81,7 +86,7 @@ class SplashView extends GetView {
                     Get.toNamed('/login');
                   },
                   iconSize: 40,
-                  color: Colors.white,
+                  color: AppColor.red,
                 ),
                 const SizedBox(
                   height: 20,

@@ -24,6 +24,8 @@ abstract class Routes {
   static const PASSWORD_UPDATED = _Paths.PASSWORD_UPDATED;
   static const SUCCESS_PURCHASED = _Paths.SUCCESS_PURCHASED;
   static const MY_ORDERS = _Paths.MY_ORDERS;
+  static const ALL_CATEGORIES = _Paths.ALL_CATEGORIES;
+  static const CATEGORY_PRODUCTS = _Paths.CATEGORY_PRODUCTS;
 }
 
 abstract class _Paths {
@@ -49,4 +51,6 @@ abstract class _Paths {
   static const PASSWORD_UPDATED = '/password-updated';
   static const SUCCESS_PURCHASED = '/success-purchased';
   static const MY_ORDERS = '/my-orders';
+  static const ALL_CATEGORIES = '/all-categories';
+  static const CATEGORY_PRODUCTS = '/category-products';
 }
