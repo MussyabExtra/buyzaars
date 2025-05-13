@@ -74,17 +74,19 @@ class CategoryProductsView extends GetView<CategoryProductsController> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: GestureDetector(
-                      onTap: () {
-                        print(product.description.toString());
-                        productDetailsModal(
-                          context: context,
-                          imageUrl: product.images[0].src.toString(),
-                          productName: product.name.toString(),
-                          productDescription: product.description.toString(),
-                          price: "\$${product.price}",
-                          id: product.id,
-                        );
-                      },
+                      // onTap: () {
+                      //   print(product.description.toString());
+                      //   productDetailsModal(
+                      //     context: context,
+                      //     imageUrl: product.images[0].src.toString(),
+                      //     productName: product.name.toString(),
+                      //     productDescription: product.description.toString(),
+                      //     price: "\$${product.price}",
+                      //     id: product.id,
+                      //     variation: product.variations,
+                      //           attribute: product.attributes,
+                      //   );
+                      // },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

@@ -36,8 +36,6 @@ import '../modules/search_product/bindings/search_product_binding.dart';
 import '../modules/search_product/views/search_product_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
-import '../modules/single_product/bindings/single_product_binding.dart';
-import '../modules/single_product/views/single_product_view.dart';
 import '../modules/success_purchased/bindings/success_purchased_binding.dart';
 import '../modules/success_purchased/views/success_purchased_view.dart';
 import '../modules/terms_of_service/bindings/terms_of_service_binding.dart';
@@ -75,11 +73,6 @@ class AppPages {
       name: _Paths.FORGOT_PASSWORD,
       page: () => ForgotPasswordView(),
       binding: ForgotPasswordBinding(),
-    ),
-    GetPage(
-      name: _Paths.SINGLE_PRODUCT,
-      page: () => const SingleProductView(),
-      binding: SingleProductBinding(),
     ),
     GetPage(
       name: _Paths.RECOVERY_SCREEN,

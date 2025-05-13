@@ -454,6 +454,8 @@ class HomeView extends GetView<HomeController> {
                                           product.description.toString(),
                                       price: "\$${product.price}",
                                       id: product.id,
+                                      variation: product.variations,
+                                      attribute: product.attributes,
                                     );
                                   },
                                   child: Column(

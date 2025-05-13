@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:buyzaars/models/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wp_woocommerce/models/product_variation.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 // Update imports from letter_of_love to buyzaars
@@ -65,18 +67,19 @@ class CartController extends GetxController {
   }
 
   // Add product to cart
-  Future<void> addToCart(String productId) async {
+  Future<void> addToCart(
+      {String? productId, List<WooProductVariation>? variation}) async {
     try {
       isLoading.value = true;
       loader.value = true;
-      if (cartItems.any((item) => item.id == int.parse(productId))) {
+      if (cartItems.any((item) => item.id == int.parse(productId!))) {
         Get.snackbar("Sorry", "You can't add the same product twice.",
             backgroundColor: AppColor.red, colorText: Colors.white);
 
         return;
       }
       await woocommerce.addToMyCart(
-          itemId: productId.toString(), quantity: '1',);
+          itemId: productId.toString(), quantity: '1', variations: variation);
       await fetchCartItems();
       Get.back();
       Get.snackbar("Added to Cart", "Product added to cart successfully.",
