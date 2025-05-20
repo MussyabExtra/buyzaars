@@ -418,7 +418,7 @@ class HomeView extends GetView<HomeController> {
                               var product = controller.allproducts[index];
                               // print(product.images.first);
                               print(product.name);
-                              print(product.shortDescription);
+                              print(product.variations);
                               print(product.price);
                               print(controller.allproducts.length);
                               if (controller.isLoading.value) {
@@ -447,12 +447,11 @@ class HomeView extends GetView<HomeController> {
                                     print(product.description.toString());
                                     productDetailsModal(
                                       context: context,
-                                      imageUrl:
-                                          product.images[0].src.toString(),
+                                      imageUrl: product.images[0].src.toString(),
                                       productName: product.name.toString(),
                                       productDescription:
                                           product.description.toString(),
-                                      price: "\$${product.price}",
+                                      price: product.price.toString(),
                                       id: product.id,
                                       variation: product.variations,
                                       attribute: product.attributes,

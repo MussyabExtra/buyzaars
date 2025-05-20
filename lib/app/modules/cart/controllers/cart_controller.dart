@@ -14,6 +14,7 @@ class CartController extends GetxController {
   var cartItems = <WooCartItems>[].obs; // Observing cart items
   var totalPrice = 0.0.obs; // Observing total price
   var isLoading = false.obs; // For showing loading indicators
+  RxBool isvarloading = false.obs;
   RxBool loader = false.obs;
 
   @override
@@ -68,8 +69,10 @@ class CartController extends GetxController {
 
   // Add product to cart
   Future<void> addToCart(
-      {String? productId, List<WooProductVariation>? variation}) async {
+      {String? productId, List<Map<String, dynamic>>? variation}) async {
     try {
+      print("Adding to cart: $productId");
+      print("Variations: $variation");
       isLoading.value = true;
       loader.value = true;
       if (cartItems.any((item) => item.id == int.parse(productId!))) {
@@ -104,4 +107,104 @@ class CartController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  // Future<WooProductVariation?> fetchMatchingVariation(
+  //     int productId, Map<String, String> selectedAttributes) async {
+  //   isvarloading.value = true;
+
+  //   try {
+  //     final query = selectedAttributes.entries
+  //         .map((e) =>
+  //             'attribute=${Uri.encodeComponent(e.key)}&attribute_term=${Uri.encodeComponent(e.value)}')
+  //         .join('&');
+
+  //     final url =
+  //         'https://buyzaars.com/wp-json/wc/v3/products/$productId/variations?$query&consumer_key=${woocommerce.consumerKey}&consumer_secret=${woocommerce.consumerSecret}';
+
+  //     print('Fetching variation with: $url');
+
+  //     final response = await http.get(Uri.parse(url));
+
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> decoded = jsonDecode(response.body);
+
+  //       if (decoded.isNotEmpty) {
+  //         return WooProductVariation.fromJson(decoded.first);
+  //       } else {
+  //         print("No matching variation found.");
+  //       }
+  //     } else {
+  //       print(
+  //           "Variation fetch failed [${response.statusCode}]: ${response.body}");
+  //     }
+  //   } catch (e) {
+  //     print("Exception while fetching variation: $e");
+  //   } finally {
+  //     isvarloading.value = false;
+  //   }
+
+  //   return null;
+  // }
+
+
+Future<void> addToCartWithVariation({
+  required String productId,
+  required String variationId,
+}) async {
+  try {
+    isLoading.value = true;
+    loader.value = true;
+
+    await woocommerce.addToMyCart(
+      itemId: productId,
+      quantity: '1',
+      variations: [
+      ]
+    );
+
+    await fetchCartItems();
+    Get.back();
+    Get.snackbar("Added", "Product added to cart successfully.");
+  } catch (e) {
+    print("Cart error: $e");
+  } finally {
+    isLoading.value = false;
+    loader.value = false;
+  }
+}
+
+  Future<WooProductVariation?> fetchMatchingVariation({
+  required int productId,
+  required List<int> variationIds,
+  required Map<String, String> selectedAttributes,
+}) async {
+  try{
+    isvarloading.value = true;
+  for (int varId in variationIds) {
+    final response = await http.get(Uri.parse('https://buyzaars.com/wp-json/wc/v3/products/$productId/variations/$varId?consumer_key=${woocommerce.consumerKey}&consumer_secret=${woocommerce.consumerSecret}'));
+    print('Fetching variation with: https://buyzaars.com/wp-json/wc/v3/products/$productId/variations/$varId?consumer_key=${woocommerce.consumerKey}&consumer_secret=${woocommerce.consumerSecret}');
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final variation = WooProductVariation.fromJson(data);
+      print('Variation data: $data');
+
+      // Match selected attributes
+      bool isMatch = variation.attributes.every((attr) {
+        return selectedAttributes[attr.name?.toLowerCase()]?.toLowerCase() == attr.option?.toLowerCase();
+      });
+
+      if (isMatch) {
+        return variation;
+      }
+    }
+  }
+  } catch (e) {
+    print("Error fetching variation: $e");
+  } finally {
+    isvarloading.value = false;
+  }
+  return null;
+}
+
 }

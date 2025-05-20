@@ -18,6 +18,10 @@ productDetailsModal({
   required List<WooProductItemAttribute> attribute,
 }) {
   final BottomNavController bcontroller = Get.find<BottomNavController>();
+  final CartController cartController = Get.find<CartController>();
+
+  print('variation: $variation');
+  print('attribute: $attribute');
 
   // Create RxString for selected attribute values
   final selectedAttributes = <String, RxString>{};
@@ -27,9 +31,32 @@ productDetailsModal({
     selectedAttributes[attr.name!] = ''.obs;
   }
 
+  Rx<WooProductVariation?> selectedVariation = Rx<WooProductVariation?>(null);
+  RxString currentPrice = price.obs;
+
+  void updateSelectedVariation() async {
+    if (variation != null) {
+      Map<String, String> selectedAttr = {};
+      selectedAttributes.forEach((key, value) {
+        selectedAttr[key.toLowerCase()] = value.value;
+      });
+
+      var matchedVar = await cartController.fetchMatchingVariation(
+        productId: id,
+        variationIds: variation,
+        selectedAttributes: selectedAttr,
+      );
+
+      if (matchedVar != null) {
+        selectedVariation.value = matchedVar;
+        currentPrice.value = matchedVar.price!;
+      }
+    }
+  }
+
   return showModalBottomSheet(
     backgroundColor: AppColor.white,
-    barrierColor: Colors.red.withOpacity(0.5),
+    barrierColor: Colors.black12.withOpacity(0.5),
     isScrollControlled: true,
     enableDrag: true,
     useSafeArea: true,
@@ -80,14 +107,25 @@ productDetailsModal({
                         ),
                       ),
                       SizedBox(width: 10),
-                      Text(
-                        price,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.red,
-                          fontSize: 25,
-                        ),
-                      ),
+                      Obx(() {
+                        return cartController.isvarloading.value
+                            ? const SizedBox(
+                                height: 10,
+                                width: 10,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 0.5,
+                                  color: Colors.black,
+                                ),
+                              )
+                            : Text(
+                                '\$${currentPrice.value}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.red,
+                                  fontSize: 25,
+                                ),
+                              );
+                      }),
                       Html(
                           data: productDescription.isEmpty
                               ? "No description available"
@@ -109,7 +147,10 @@ productDetailsModal({
 
                       SizedBox(height: 15),
                       // Add Attribute Selection
-                      if (attribute.isNotEmpty) ...[
+                      if (attribute.isNotEmpty &&
+                          variation != [] &&
+                          variation != null &&
+                          variation.isNotEmpty) ...[
                         Text(
                           'Available Options',
                           style: TextStyle(
@@ -139,11 +180,16 @@ productDetailsModal({
                                                 ?.map(
                                                   (option) =>
                                                       Obx(() => GestureDetector(
-                                                            onTap: () {
-                                                              selectedAttributes[
-                                                                      attr.name!]
-                                                                  ?.value = option;
-                                                            },
+                                                            onTap: cartController
+                                                                    .isvarloading
+                                                                    .value
+                                                                ? null
+                                                                : () {
+                                                                    selectedAttributes[attr.name!]!
+                                                                            .value =
+                                                                        option;
+                                                                    updateSelectedVariation();
+                                                                  },
                                                             child: Container(
                                                               margin: EdgeInsets
                                                                   .only(
@@ -201,44 +247,47 @@ productDetailsModal({
                                 height: 50,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    // Validate if all attributes are selected for variable products
-                                    if (attribute.isNotEmpty) {
+                                    if (attribute.isNotEmpty &&
+                                        variation != [] &&
+                                        variation != null &&
+                                        variation.isNotEmpty) {
                                       bool allSelected = attribute.every(
-                                          (attr) =>
-                                              selectedAttributes[attr.name!]
-                                                  ?.value
-                                                  .isNotEmpty ??
-                                              false);
+                                        (attr) =>
+                                            selectedAttributes[attr.name!]
+                                                ?.value
+                                                .isNotEmpty ??
+                                            false,
+                                      );
 
-                                      if (!allSelected) {
-                                        Get.snackbar(
-                                          'Selection Required',
-                                          'Please select an Variation',
-                                          backgroundColor: AppColor.red,
-                                          colorText: Colors.white,
-                                        );
+                                      if (!allSelected ||
+                                          selectedVariation.value == null) {
+                                        Get.snackbar('Error',
+                                            'Please select a valid variation');
                                         return;
                                       }
+                                    } else {
+                                      cartController.addToCart(
+                                        productId: id.toString(),
+                                      );
                                     }
 
-                                    if (!Get.find<CartController>()
-                                        .loader
-                                        .value) {
-                                      Get.find<CartController>().addToCart(
-                                          productId: id.toString(),
-                                          variation: selectedAttributes.values
-                                                  .map((value) => value.value)
-                                                  .toList()
-                                              as List<WooProductVariation>?);
+                                    final varId = selectedVariation.value?.id;
+
+                                    if (varId != null) {
+                                      final selectedAttrMaps =
+                                          selectedVariation.value?.attributes
+                                              ?.map((attr) => {
+                                                    'attribute': attr.name,
+                                                    'value': attr.option,
+                                                  })
+                                              .toList();
+
+                                      cartController.addToCart(
+                                        productId: id.toString(),
+                                        variation: selectedAttrMaps,
+                                      );
                                     }
                                   },
-                                  // onPressed:
-                                  //     Get.find<CartController>().loader.value
-                                  //         ? null // Disable button when loading
-                                  //         : () {
-                                  //             Get.find<CartController>()
-                                  //                 .addToCart(id.toString());
-                                  //           },
                                   child: Get.find<CartController>().loader.value
                                       ? const SizedBox(
                                           height: 10,
