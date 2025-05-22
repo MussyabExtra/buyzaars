@@ -45,6 +45,25 @@ class WooCart {
   }
 }
 
+class WooCartVariation {
+  String? attribute;
+  String? value;
+
+  WooCartVariation({this.attribute, this.value});
+
+  WooCartVariation.fromJson(Map<String, dynamic> json) {
+    attribute = json['attribute'];
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['attribute'] = attribute;
+    data['value'] = value;
+    return data;
+  }
+}
+
 class WooCartItems {
   String? key;
   int? id;
@@ -55,6 +74,7 @@ class WooCartItems {
   List<WooCartImages>? images;
   double? price;
   double? linePrice;
+  List<WooCartVariation>? variation;
 
   WooCartItems({
     this.key,
@@ -66,6 +86,7 @@ class WooCartItems {
     this.images,
     this.price,
     this.linePrice,
+    this.variation,
   });
 
   WooCartItems.fromJson(Map<String, dynamic> json) {
@@ -83,6 +104,12 @@ class WooCartItems {
     }
     price = double.tryParse(json['prices']['price'] ?? '0');
     linePrice = double.tryParse(json['totals']['line_total'] ?? '0');
+    if (json['variation'] != null) {
+      variation = <WooCartVariation>[];
+      json['variation'].forEach((v) {
+        variation!.add(WooCartVariation.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +125,9 @@ class WooCartItems {
     }
     data['price'] = price.toString();
     data['line_price'] = linePrice.toString();
+    if (variation != null) {
+      data['variation'] = variation!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

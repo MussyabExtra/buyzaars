@@ -92,6 +92,7 @@ class AccountView extends GetView<AccountController> {
                     ),
                     Divider(
                       color: AppColor.primarycolor,
+                      thickness: 0.2,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -122,6 +123,7 @@ class AccountView extends GetView<AccountController> {
                     ),
                     Divider(
                       color: AppColor.primarycolor,
+                      thickness: 0.2,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -152,6 +154,7 @@ class AccountView extends GetView<AccountController> {
                     ),
                     Divider(
                       color: AppColor.primarycolor,
+                      thickness: 0.2,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -182,6 +185,7 @@ class AccountView extends GetView<AccountController> {
                     ),
                     Divider(
                       color: AppColor.primarycolor,
+                      thickness: 0.2,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -236,14 +240,14 @@ class AccountView extends GetView<AccountController> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: AppColor.white,
+                                color: AppColor.black,
                               ),
                             ),
                             Spacer(),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: 18,
-                              color: AppColor.white,
+                              color: AppColor.black,
                             ),
                           ],
                         ),

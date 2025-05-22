@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wp_woocommerce/models/products.dart';
 import 'package:get/get.dart';
@@ -101,9 +102,9 @@ class _SearchProductViewstate extends State<SearchProductView> {
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        mainAxisSpacing: 15,
-                        crossAxisSpacing: 15,
-                        childAspectRatio: 0.7,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
+                        childAspectRatio: 0.6,
                       ),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -132,7 +133,7 @@ class _SearchProductViewstate extends State<SearchProductView> {
                                 productName: product.name.toString(),
                                 productDescription:
                                     product.description.toString(),
-                                price: "\$${product.price}",
+                                price: product.price.toString(),
                                 id: product.id,
                                 variation: product.variations,
                                 attribute: product.attributes,
@@ -145,10 +146,10 @@ class _SearchProductViewstate extends State<SearchProductView> {
                                   width: double.infinity,
                                   height: 150,
                                   decoration: BoxDecoration(
-                                    color: AppColor.red.withOpacity(0.1),
+                                    color: AppColor.red.withOpacity(0.05),
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: NetworkImage(
+                                      image: CachedNetworkImageProvider(
                                         product.images[0].src.toString(),
                                       ),
                                       fit: BoxFit.contain,
@@ -160,7 +161,7 @@ class _SearchProductViewstate extends State<SearchProductView> {
                                   product.name ?? '',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                    color: AppColor.black,
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,

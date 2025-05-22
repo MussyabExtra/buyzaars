@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_wp_woocommerce/models/products.dart';
@@ -91,10 +92,24 @@ productDetailsModal({
                     children: [
                       Align(
                         alignment: Alignment.center,
-                        child: Image.network(
-                          imageUrl,
+                        child: CachedNetworkImage(
+                          imageUrl:  imageUrl,
                           fit: BoxFit.cover,
                           height: 300,
+                          placeholder: (context, url) => Container(
+                            height: 300,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: AppColor.red.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Center(
+                              child: CircularProgressIndicator( 
+                                color: AppColor.red,
+                                strokeWidth: 0.3,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -109,7 +124,8 @@ productDetailsModal({
                       SizedBox(width: 10),
                       Obx(() {
                         return cartController.isvarloading.value
-                            ? const SizedBox(
+                            ?  Container(
+                                margin: EdgeInsets.all(10),
                                 height: 10,
                                 width: 10,
                                 child: CircularProgressIndicator(
@@ -262,7 +278,9 @@ productDetailsModal({
                                       if (!allSelected ||
                                           selectedVariation.value == null) {
                                         Get.snackbar('Error',
-                                            'Please select a valid variation');
+                                            'Please select a valid variation',
+                                            backgroundColor: AppColor.red,
+                                            colorText: Colors.white);
                                         return;
                                       }
                                     } else {
@@ -282,7 +300,7 @@ productDetailsModal({
                                                   })
                                               .toList();
 
-                                      cartController.addToCart(
+                                      cartController.addToCartWithVariation(
                                         productId: id.toString(),
                                         variation: selectedAttrMaps,
                                       );
@@ -311,7 +329,7 @@ productDetailsModal({
                                               maxWidth: double.infinity,
                                             ),
                                             child: Text(
-                                              "Add to Cart",
+                                              cartController.isvarloading.value ? "Loading..." : "Add to Cart",
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,

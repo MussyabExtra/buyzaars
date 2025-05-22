@@ -9,7 +9,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.secondaryColor,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         title: Text(
           'My Orders',

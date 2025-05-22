@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:buyzaars/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wp_woocommerce/models/product_variation.dart';
+import 'package:flutter_wp_woocommerce/utilities/local_db.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 // Update imports from letter_of_love to buyzaars
@@ -71,18 +72,20 @@ class CartController extends GetxController {
   Future<void> addToCart(
       {String? productId, List<Map<String, dynamic>>? variation}) async {
     try {
+      final String token = await getTokenFromSharedPreferences();
+      print("Token: $token");
       print("Adding to cart: $productId");
       print("Variations: $variation");
       isLoading.value = true;
       loader.value = true;
-      if (cartItems.any((item) => item.id == int.parse(productId!))) {
-        Get.snackbar("Sorry", "You can't add the same product twice.",
-            backgroundColor: AppColor.red, colorText: Colors.white);
+      // if (cartItems.any((item) => item.id == int.parse(productId!))) {
+      //   Get.snackbar("Sorry", "You can't add the same product twice.",
+      //       backgroundColor: AppColor.red, colorText: Colors.white);
 
-        return;
-      }
+      //   return;
+      // }
       await woocommerce.addToMyCart(
-          itemId: productId.toString(), quantity: '1', variations: variation);
+          itemId: productId.toString(), quantity: '1',);
       await fetchCartItems();
       Get.back();
       Get.snackbar("Added to Cart", "Product added to cart successfully.",
@@ -98,6 +101,7 @@ class CartController extends GetxController {
   // Remove item from cart
   Future<void> removeFromCart(String key) async {
     try {
+      print("Removing from cart: $key");
       isLoading.value = true;
       await woocommerce.deleteMyCartItem(key: key);
       await fetchCartItems(); // Refresh cart after removal
@@ -108,63 +112,54 @@ class CartController extends GetxController {
     }
   }
 
-  // Future<WooProductVariation?> fetchMatchingVariation(
-  //     int productId, Map<String, String> selectedAttributes) async {
-  //   isvarloading.value = true;
-
-  //   try {
-  //     final query = selectedAttributes.entries
-  //         .map((e) =>
-  //             'attribute=${Uri.encodeComponent(e.key)}&attribute_term=${Uri.encodeComponent(e.value)}')
-  //         .join('&');
-
-  //     final url =
-  //         'https://buyzaars.com/wp-json/wc/v3/products/$productId/variations?$query&consumer_key=${woocommerce.consumerKey}&consumer_secret=${woocommerce.consumerSecret}';
-
-  //     print('Fetching variation with: $url');
-
-  //     final response = await http.get(Uri.parse(url));
-
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> decoded = jsonDecode(response.body);
-
-  //       if (decoded.isNotEmpty) {
-  //         return WooProductVariation.fromJson(decoded.first);
-  //       } else {
-  //         print("No matching variation found.");
-  //       }
-  //     } else {
-  //       print(
-  //           "Variation fetch failed [${response.statusCode}]: ${response.body}");
-  //     }
-  //   } catch (e) {
-  //     print("Exception while fetching variation: $e");
-  //   } finally {
-  //     isvarloading.value = false;
-  //   }
-
-  //   return null;
-  // }
+Future<void> updateCartItemQuantity(
+      String key, int quantity, int id) async {
+    try {
+      isLoading.value = true;
+      await woocommerce.updateMyCartItemByKey(key: key, id: id, quantity: quantity);
+      await fetchCartItems(); // Refresh cart after updating
+    } catch (e) {
+      print("Error updating cart item: $e");
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
 
 Future<void> addToCartWithVariation({
   required String productId,
-  required String variationId,
+  List<Map<String, dynamic>>? variation,
 }) async {
   try {
+      LocalDatabaseService _localDbService = LocalDatabaseService();
+    String? authToken = await _localDbService.getSecurityToken();
     isLoading.value = true;
     loader.value = true;
 
-    await woocommerce.addToMyCart(
-      itemId: productId,
-      quantity: '1',
-      variations: [
-      ]
+    final response = await http.post(
+      Uri.parse('${woocommerce.baseUrl}/wp-json/wc/store/cart/add-item'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $authToken',
+      },
+      body: jsonEncode({
+        'id': productId,
+        'quantity': 1,
+        'variation': variation, 
+      })
     );
+    print('Response status: ${response.statusCode}');
+    // await woocommerce.addToMyCart(
+    //   itemId: productId,
+    //   quantity: '1',
+    //   variations: variation,
+    // );
 
     await fetchCartItems();
     Get.back();
-    Get.snackbar("Added", "Product added to cart successfully.");
+    Get.snackbar("Added", "Product added to cart successfully.",
+        backgroundColor: AppColor.red, colorText: Colors.white);
   } catch (e) {
     print("Cart error: $e");
   } finally {

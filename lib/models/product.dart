@@ -1,3 +1,5 @@
+import 'package:flutter_wp_woocommerce/models/products.dart';
+
 class Product {
   final int id;
   final String name;
@@ -25,7 +27,7 @@ class Product {
   final List<ImageData> images;
   final List<Category> categories;
   final String priceHtml;
-  final List<Attribute> attributes; // New attribute section
+  List<WooProductItemAttribute> attributes; // New attribute section
   final List<int> variations; // Variation IDs
 
   Product({
@@ -92,7 +94,7 @@ class Product {
           .toList(),
       priceHtml: json['price_html'],
       attributes: (json['attributes'] as List)
-          .map((attrJson) => Attribute.fromJson(attrJson))
+          .map((attributeJson) => WooProductItemAttribute.fromJson(attributeJson))
           .toList(),
       variations: List<int>.from(json['variations']),
     );

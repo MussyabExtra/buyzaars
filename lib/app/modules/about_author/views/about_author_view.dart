@@ -49,7 +49,7 @@ class AboutAuthorView extends GetView<AboutAuthorController> {
                     ),
                     SizedBox(height: 30),
                     Text(
-                      'For many years I have written poems, stories and journals to put my thoughts and feelings down on paper. I thank the Lord for this day, for helping me on my way. When I was growing up my Grandma wrote in a little book and kept all the important information right with her so she could remember myriads of writings. She left me her little book with poems to spice up my life and I have been intrigued with writing ever since.',
+                      'At Buy Zaars, we are redefining the online shopping experience by offering a comprehensive platform where you can find everything you need in one place. From stylish apparel to fresh groceries, cutting-edge electronics, and daily essentials, we cater to a wide variety of customer needs. Our goal is to make shopping more convenient, efficient, and enjoyable by providing high-quality products at competitive prices, backed by exceptional service.',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -58,7 +58,7 @@ class AboutAuthorView extends GetView<AboutAuthorController> {
                     ),
                     SizedBox(height: 20),
                     Text(
-                      'When I was in College, I read a poem in the Centenary College Literary Contest and became interested in poetry and reciting poetry and giving speeches. Everyone goes through trials and tribulations, hard times and harder times but with faith in God, getting through , making it and coming out ahead of the game is what is important.. I have had experiences that some people thought were horrible. When I was a small child we travelled extensively and I was away from home and school for three months at a time. I was an only child and I had fun with my Mother and Father every day in our car or a motel room. I had the measles on one trip and they had to blacken the windows. Another time we were snowed in and had to have our car lifted out of the hotel parking lot by a crane as my Dad had an important assignment. That was a thrill.',
+                      'Our journey began with a simple mission: to create a marketplace that prioritizes customer satisfaction while offering unparalleled value. Over the years, we’ve grown into a trusted destination for shoppers, thanks to our commitment to quality, reliability, and innovation. Every product on Buy Zaars is carefully curated to meet the highest standards, ensuring our customers always receive the best. At the heart of Buy Zaars is a team of dedicated professionals who strive to enhance your shopping experience. With fast and secure delivery options, user-friendly website navigation, and round-the-clock customer support, we make shopping stress-free and rewarding. Whether you’re stocking up on household items or exploring the latest trends, Buy Zaars is here to simplify your life and exceed your expectations.',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 class CategoryProductsController extends GetxController {
   String? categoryId;
+  String? categoryName;
   RxBool isLoading = false.obs;
   RxList<Product> products = <Product>[].obs;
   final count = 0.obs;
@@ -17,6 +18,8 @@ class CategoryProductsController extends GetxController {
     super.onInit();
     print(Get.arguments['categoryId']);
     categoryId = Get.arguments['categoryId'].toString();
+    categoryName = Get.arguments['categoryName'].toString();
+
     print(categoryId);
     fetchProductsByCategoryId();
   }

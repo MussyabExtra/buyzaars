@@ -34,7 +34,7 @@ class LoginView extends GetView<LoginController> {
             child: Container(
               height: MediaQuery.of(context).size.height * 0.9 - 50,
               decoration: BoxDecoration(
-                color: AppColor.red,
+                color: AppColor.white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(20),
                 ),
@@ -55,7 +55,7 @@ class LoginView extends GetView<LoginController> {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                           SizedBox(height: 8),
@@ -64,10 +64,10 @@ class LoginView extends GetView<LoginController> {
                             decoration: InputDecoration(
                               labelText: "Your Email",
                               labelStyle: TextStyle(
-                                color: Color(0xFFB8B8B8),
+                                color: Colors.black54,
                               ),
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: Colors.black12,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide: BorderSide.none,
@@ -78,7 +78,7 @@ class LoginView extends GetView<LoginController> {
                                   FloatingLabelBehavior.never,
                             ),
                             style: TextStyle(
-                              color: AppColor.red,
+                              color: AppColor.black,
                             ),
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
@@ -94,7 +94,7 @@ class LoginView extends GetView<LoginController> {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                           ),
                           SizedBox(height: 8),
@@ -104,10 +104,10 @@ class LoginView extends GetView<LoginController> {
                               decoration: InputDecoration(
                                 labelText: "Your Password",
                                 labelStyle: TextStyle(
-                                  color: Color(0xFFB8B8B8),
+                                  color: Colors.black54,
                                 ),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: Colors.black12,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide: BorderSide.none,
@@ -138,30 +138,30 @@ class LoginView extends GetView<LoginController> {
                                 return null;
                               },
                               style: TextStyle(
-                                color: AppColor.red,
+                                color: AppColor.black,
                               ),
                             ),
                           ),
                           SizedBox(height: 20),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 0),
-                              child: TextButton(
-                                onPressed: () {
-                                  Get.toNamed('/forgot-password');
-                                },
-                                child: Text(
-                                  "Forgot Password?",
-                                  style: TextStyle(
-                                    color: AppColor.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.topRight,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(left: 0),
+                          //     child: TextButton(
+                          //       onPressed: () {
+                          //         Get.toNamed('/forgot-password');
+                          //       },
+                          //       child: Text(
+                          //         "Forgot Password?",
+                          //         style: TextStyle(
+                          //           color: AppColor.white,
+                          //           fontSize: 15,
+                          //           fontWeight: FontWeight.w600,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(height: 20),
                           Obx(
                             () => ElevatedButton(
@@ -225,7 +225,7 @@ class LoginView extends GetView<LoginController> {
                                       const EdgeInsets.all(0))),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 30),
                           Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -233,20 +233,20 @@ class LoginView extends GetView<LoginController> {
                                 Text(
                                   "Don't have an account?",
                                   style: TextStyle(
-                                    color: AppColor.white,
-                                    fontWeight: FontWeight.w600,
+                                    color: AppColor.black,
                                     fontSize: 15,
                                   ),
                                 ),
-                                TextButton(
-                                  onPressed: () {
+                                SizedBox(width: 5),
+                                GestureDetector(
+                                  onTap: () {
                                     Get.toNamed('/signup');
                                   },
                                   child: Text(
                                     "Sign up",
                                     style: TextStyle(
-                                      color: AppColor.black,
-                                      fontSize: 14,
+                                      color: AppColor.red,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

@@ -1,8 +1,10 @@
 import 'package:buyzaars/app/routes/app_pages.dart';
 import 'package:buyzaars/utilities/colors.dart';
 import 'package:buyzaars/app/modules/bottom_nav/controllers/bottom_nav_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:buyzaars/widgets/productDetailModal.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -30,8 +32,12 @@ class HomeView extends GetView<HomeController> {
         appBar: AppBar(
             automaticallyImplyLeading: F,
             backgroundColor: AppColor.white,
-            elevation: 0,
-            title: Image.asset("assets/images/logo.png"),
+            elevation: 15,
+            // scrolledUnderElevation: 1.2,
+            toolbarHeight: 60,
+            shadowColor: AppColor.red.withOpacity(0.2),
+            // surfaceTintColor: Colors.transparent,
+            title: Image.asset("assets/images/logo.png", height: 40),
             actions: [
               IconButton(
                 icon: Icon(
@@ -325,6 +331,8 @@ class HomeView extends GetView<HomeController> {
                                           arguments: {
                                             'categoryId':
                                                 displayCategories[0].id,
+                                            'categoryName':
+                                                displayCategories[0].name,
                                           });
                                     },
                                   ),
@@ -341,6 +349,8 @@ class HomeView extends GetView<HomeController> {
                                           arguments: {
                                             'categoryId':
                                                 displayCategories[1].id,
+                                            'categoryName':
+                                                displayCategories[1].name,
                                           });
                                     },
                                   ),
@@ -363,6 +373,8 @@ class HomeView extends GetView<HomeController> {
                                             arguments: {
                                               'categoryId':
                                                   displayCategories[i].id,
+                                              'categoryName':
+                                                  displayCategories[i].name,
                                             });
                                       },
                                     ),
@@ -465,11 +477,11 @@ class HomeView extends GetView<HomeController> {
                                         width: 150,
                                         height: 150,
                                         decoration: BoxDecoration(
-                                          color: AppColor.red.withOpacity(0.1),
+                                          color: AppColor.red.withOpacity(0.05),
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           image: DecorationImage(
-                                            image: NetworkImage(product
+                                            image: CachedNetworkImageProvider(product
                                                 .images[0].src
                                                 .toString()),
                                             fit: BoxFit.contain,
@@ -541,7 +553,7 @@ class CategoryBox extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           image: DecorationImage(
-            image: NetworkImage(image),
+            image: CachedNetworkImageProvider(image),
             fit: BoxFit.cover,
           ),
         ),
@@ -559,13 +571,24 @@ class CategoryBox extends StatelessWidget {
           ),
           padding: EdgeInsets.all(12),
           alignment: Alignment.bottomLeft,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Html(
+            data:  title,
+            style: {
+              "body": Style(
+                color: Colors.white,
+                fontSize: FontSize(14),
+                fontWeight: FontWeight.bold,
+                textOverflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                padding: HtmlPaddings.zero
+              ),
+            },
+            shrinkWrap: true,
+            // TextStyle(
+            //   color: Colors.white,
+            //   fontSize: 16,
+            //   fontWeight: FontWeight.bold,
+            // ),
           ),
         ),
       ),

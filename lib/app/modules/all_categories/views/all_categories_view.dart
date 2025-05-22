@@ -78,6 +78,8 @@ class AllCategoriesView extends GetView<AllCategoriesController> {
                                     arguments: {
                                       'categoryId': controller
                                           .allcategories[startIndex].id,
+                                      'categoryName': controller
+                                          .allcategories[startIndex].name,
                                     });
                               },
                             ),
@@ -98,6 +100,9 @@ class AllCategoriesView extends GetView<AllCategoriesController> {
                                       arguments: {
                                         'categoryId': controller
                                             .allcategories[startIndex + 1].id,
+                                        'categoryName': controller
+                                            .allcategories[startIndex + 1]
+                                            .name,
                                       });
                                 },
                               ),
@@ -128,6 +133,9 @@ class AllCategoriesView extends GetView<AllCategoriesController> {
                                         arguments: {
                                           'categoryId': controller
                                               .allcategories[startIndex + i].id,
+                                          'categoryName': controller
+                                              .allcategories[startIndex + i]
+                                              .name,
                                         });
                                   },
                                 ),

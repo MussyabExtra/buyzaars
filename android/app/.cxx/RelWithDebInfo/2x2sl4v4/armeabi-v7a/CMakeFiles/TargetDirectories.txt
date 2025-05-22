@@ -1,0 +1,2 @@
+C:/Users/TT/Documents/GitHub/buyzaars/android/app/.cxx/RelWithDebInfo/2x2sl4v4/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/TT/Documents/GitHub/buyzaars/android/app/.cxx/RelWithDebInfo/2x2sl4v4/armeabi-v7a/CMakeFiles/rebuild_cache.dir

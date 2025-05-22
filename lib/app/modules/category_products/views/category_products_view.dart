@@ -1,7 +1,10 @@
 import 'package:buyzaars/widgets/productDetailModal.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../../../../utilities/colors.dart';
 import '../controllers/category_products_controller.dart';
@@ -14,13 +17,19 @@ class CategoryProductsView extends GetView<CategoryProductsController> {
     print(controller.categoryId);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Category Products',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: AppColor.white,
-          ),
+        title: Html(
+          data: controller.categoryName.toString(),
+          style: {
+            "body": Style(
+              fontSize: FontSize(16.0),
+              color: AppColor.white,
+              fontWeight: FontWeight.bold,
+              textAlign: TextAlign.center,
+              textOverflow: TextOverflow.ellipsis
+            ),
+
+          },
+          shrinkWrap: T,
         ),
         centerTitle: true,
         backgroundColor: AppColor.red,
@@ -40,14 +49,30 @@ class CategoryProductsView extends GetView<CategoryProductsController> {
             if (controller.isLoading.value) {
               return Center(child: CircularProgressIndicator());
             }
+            if (controller.products.isEmpty) {
+              return Column(
+                children: [
+                  SizedBox(height: 180),
+                  Center(
+                    child: Text(
+                      "No products found",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black26,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
             return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 0,
-                  crossAxisSpacing: 15,
-                  childAspectRatio: 0.7,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 0.6,
                 ),
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 5),
                 shrinkWrap: true,
                 itemCount: controller.products.length,
                 physics: const NeverScrollableScrollPhysics(),
@@ -74,19 +99,19 @@ class CategoryProductsView extends GetView<CategoryProductsController> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: GestureDetector(
-                      // onTap: () {
-                      //   print(product.description.toString());
-                      //   productDetailsModal(
-                      //     context: context,
-                      //     imageUrl: product.images[0].src.toString(),
-                      //     productName: product.name.toString(),
-                      //     productDescription: product.description.toString(),
-                      //     price: "\$${product.price}",
-                      //     id: product.id,
-                      //     variation: product.variations,
-                      //           attribute: product.attributes,
-                      //   );
-                      // },
+                      onTap: () {
+                        print(product.description.toString());
+                        productDetailsModal(
+                          context: context,
+                          imageUrl: product.images[0].src.toString(),
+                          productName: product.name.toString(),
+                          productDescription: product.description.toString(),
+                          price: product.price.toString(),
+                          id: product.id,
+                          variation: product.variations,
+                          attribute: product.attributes,
+                        );
+                      },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -94,10 +119,10 @@ class CategoryProductsView extends GetView<CategoryProductsController> {
                             width: 150,
                             height: 150,
                             decoration: BoxDecoration(
-                              color: AppColor.red.withOpacity(0.1),
+                              color: AppColor.red.withOpacity(0.05),
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
-                                image: NetworkImage(
+                                image: CachedNetworkImageProvider(
                                     product.images[0].src.toString()),
                                 fit: BoxFit.contain,
                               ),
