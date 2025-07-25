@@ -40,7 +40,7 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'  // Ensure this is present
-    implementation 'com.google.android.material:material:1.4.0' // Ensure this is added for Material Components
+    implementation 'com.google.android.material:material:1.6.0' // Ensure this is added for Material Components
     // Other dependencies...
 }
 

@@ -1,22 +1,23 @@
 import 'dart:convert';
-import 'package:buyzaars/models/cart.dart';
+import 'package:buyzaars/api_key.dart';
+import 'package:buyzaars/models/cartmodel.dart';
+import 'package:buyzaars/utilities/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wp_woocommerce/models/product_variation.dart';
 import 'package:flutter_wp_woocommerce/utilities/local_db.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
-// Update imports from letter_of_love to buyzaars
-import 'package:buyzaars/api_key.dart';
-import 'package:buyzaars/models/cartmodel.dart';
-import 'package:buyzaars/utilities/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// Update imports from letter_of_love to buyzaars
+
 
 class CartController extends GetxController {
   var cartItems = <WooCartItems>[].obs; // Observing cart items
   var totalPrice = 0.0.obs; // Observing total price
   var isLoading = false.obs; // For showing loading indicators
-  RxBool isvarloading = false.obs;
   RxBool loader = false.obs;
+  // Per-item loading state for increment, decrement, and delete
+  RxMap<String, bool> itemLoading = <String, bool>{}.obs;
 
   @override
   void onInit() {
@@ -29,8 +30,6 @@ class CartController extends GetxController {
     return prefs.getString('token');
   }
 
-//clear cart
-
   // Add product to cart
 
   // Fetch cart items
@@ -40,7 +39,42 @@ class CartController extends GetxController {
       final String token = await getTokenFromSharedPreferences();
       final response = await http.get(
         Uri.parse('${woocommerce.baseUrl}/wp-json/wc/store/cart/items'),
-        headers: {'Authorization': 'Bearer ${token}'},
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        // Parse the response body as a List
+        final List<dynamic> jsonResponse = jsonDecode(response.body);
+
+        // Map the List into WooCartItems
+        cartItems.value = jsonResponse
+            .map((item) => WooCartItems.fromJson(item as Map<String, dynamic>))
+            .toList();
+
+        // Calculate the total price manually since it's a flat list
+        totalPrice.value = cartItems.fold(
+            0.0,
+            (sum, item) =>
+                sum + (item.linePrice ?? 0)); // Use linePrice for totals
+      } else {
+        print("Error fetching cart items: ${response.body}");
+      }
+    } catch (e) {
+      print(woocommerce.authToken);
+      print("Error fetching cart items: $e");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+  Future<void> clearCart() async {
+    try {
+      isLoading.value = true;
+      final String token = await getTokenFromSharedPreferences();
+      final response = await http.delete(
+        Uri.parse('${woocommerce.baseUrl}/wp-json/wc/store/cart/items'),
+        headers: {'Authorization': 'Bearer $token'},
       );
 
       if (response.statusCode == 200) {
@@ -87,11 +121,16 @@ class CartController extends GetxController {
       await woocommerce.addToMyCart(
           itemId: productId.toString(), quantity: '1',);
       await fetchCartItems();
-      Get.back();
+      // Get.back();
       Get.snackbar("Added to Cart", "Product added to cart successfully.",
           backgroundColor: AppColor.red, colorText: Colors.white);
     } catch (e) {
       print("Error adding to cart: $e");
+       //out of stock
+       if(e.toString().contains("out of stock")){
+        Get.snackbar("Out of Stock", "Product is out of stock.",
+            backgroundColor: Colors.red, colorText: Colors.white);
+       }
     } finally {
       isLoading.value = false;
       loader.value = false;
@@ -102,26 +141,31 @@ class CartController extends GetxController {
   Future<void> removeFromCart(String key) async {
     try {
       print("Removing from cart: $key");
-      isLoading.value = true;
+      itemLoading[key] = true;
       await woocommerce.deleteMyCartItem(key: key);
       await fetchCartItems(); // Refresh cart after removal
     } catch (e) {
       print("Error removing from cart: $e");
+       //out of stock
+       if(e.toString().contains("out of stock")){
+        Get.snackbar("Out of Stock", "Product is out of stock.",
+            backgroundColor: Colors.red, colorText: Colors.white);
+       }
     } finally {
-      isLoading.value = false;
+      itemLoading[key] = false;
     }
   }
 
 Future<void> updateCartItemQuantity(
       String key, int quantity, int id) async {
     try {
-      isLoading.value = true;
+      itemLoading[key] = true;
       await woocommerce.updateMyCartItemByKey(key: key, id: id, quantity: quantity);
       await fetchCartItems(); // Refresh cart after updating
     } catch (e) {
       print("Error updating cart item: $e");
     } finally {
-      isLoading.value = false;
+      itemLoading[key] = false;
     }
   }
 
@@ -149,57 +193,31 @@ Future<void> addToCartWithVariation({
         'variation': variation, 
       })
     );
-    print('Response status: ${response.statusCode}');
+    if(response.statusCode == 200 || response.statusCode == 201){
+      await fetchCartItems();
+    // Get.back();
+    Get.snackbar("Added", "Product added to cart successfully.",
+        backgroundColor: AppColor.red, colorText: Colors.white);
+    } else {
+      Get.snackbar("Error", "Failed to add product to cart.",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+    print('Response status: ${response.body}');
     // await woocommerce.addToMyCart(
     //   itemId: productId,
     //   quantity: '1',
     //   variations: variation,
     // );
 
-    await fetchCartItems();
-    Get.back();
-    Get.snackbar("Added", "Product added to cart successfully.",
-        backgroundColor: AppColor.red, colorText: Colors.white);
   } catch (e) {
     print("Cart error: $e");
+    
   } finally {
     isLoading.value = false;
     loader.value = false;
   }
 }
 
-  Future<WooProductVariation?> fetchMatchingVariation({
-  required int productId,
-  required List<int> variationIds,
-  required Map<String, String> selectedAttributes,
-}) async {
-  try{
-    isvarloading.value = true;
-  for (int varId in variationIds) {
-    final response = await http.get(Uri.parse('https://buyzaars.com/wp-json/wc/v3/products/$productId/variations/$varId?consumer_key=${woocommerce.consumerKey}&consumer_secret=${woocommerce.consumerSecret}'));
-    print('Fetching variation with: https://buyzaars.com/wp-json/wc/v3/products/$productId/variations/$varId?consumer_key=${woocommerce.consumerKey}&consumer_secret=${woocommerce.consumerSecret}');
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final variation = WooProductVariation.fromJson(data);
-      print('Variation data: $data');
-
-      // Match selected attributes
-      bool isMatch = variation.attributes.every((attr) {
-        return selectedAttributes[attr.name?.toLowerCase()]?.toLowerCase() == attr.option?.toLowerCase();
-      });
-
-      if (isMatch) {
-        return variation;
-      }
-    }
-  }
-  } catch (e) {
-    print("Error fetching variation: $e");
-  } finally {
-    isvarloading.value = false;
-  }
-  return null;
-}
+  
 
 }

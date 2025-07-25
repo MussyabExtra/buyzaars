@@ -160,36 +160,84 @@ class CartView extends GetView<CartController> {
                                   SizedBox(width: 15),
                                   // Increment and Decrement buttons
                                   Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          if (item.quantity! > 1) {
-                                            controller.updateCartItemQuantity(
-                                                item.key.toString(),
-                                                item.quantity! - 1,
-                                                item.id!);
-                                          }
-                                        },
-                                        icon: Icon(Icons.remove),
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Obx(() {
+                                        final isLoading =
+                                            controller.itemLoading[item.key
+                                                    .toString()] ==
+                                                true;
+                                        return GestureDetector(
+                                          onTap: isLoading
+                                              ? null
+                                              : () {
+                                                  if (item.quantity! > 1) {
+                                                    controller.updateCartItemQuantity(
+                                                      item.key.toString(),
+                                                      item.quantity! - 1,
+                                                      item.id!,
+                                                    );
+                                                  }
+                                                },
+                                          child: isLoading
+                                              ? SizedBox(
+                                                  width: 16,
+                                                  height: 16,
+                                                  child: CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                  ),
+                                                )
+                                              : Icon(
+                                                  Icons.remove,
+                                                  color: AppColor.black,
+                                                  size: 20,
+                                                ),
+                                        );
+                                      }),
+                                    ),
+                                    Text(
+                                      item.quantity.toString(),
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: AppColor.black,
                                       ),
-                                      Text(
-                                        item.quantity.toString(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: AppColor.black,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          controller.updateCartItemQuantity(
-                                              item.key.toString(),
-                                              item.quantity! + 1,
-                                              item.id!);
-                                        },
-                                        icon: Icon(Icons.add),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Obx(() {
+                                        final isLoading =
+                                            controller.itemLoading[item.key
+                                                    .toString()] ==
+                                                true;
+                                        return GestureDetector(
+                                          onTap: isLoading
+                                              ? null
+                                              : () {
+                                                  controller.updateCartItemQuantity(
+                                                    item.key.toString(),
+                                                    item.quantity! + 1,
+                                                    item.id!,
+                                                  );
+                                                },
+                                          child: isLoading
+                                              ? SizedBox(
+                                                  width: 16,
+                                                  height: 16,
+                                                  child: CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                  ),
+                                                )
+                                              : Icon(
+                                                  Icons.add,
+                                                  color: AppColor.black,
+                                                  size: 20,
+                                                ),
+                                        );
+                                      }),
+                                    ),
+                                  ],
+                                ),
                                 ],
                               ),
                             ),
@@ -213,6 +261,7 @@ class CartView extends GetView<CartController> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
+                                color: AppColor.black,
                               ),
                             ),
                             Text(

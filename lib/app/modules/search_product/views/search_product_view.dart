@@ -1,3 +1,4 @@
+import 'package:buyzaars/app/routes/app_pages.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wp_woocommerce/models/products.dart';
@@ -127,17 +128,7 @@ class _SearchProductViewstate extends State<SearchProductView> {
                           ),
                           child: GestureDetector(
                             onTap: () {
-                              productDetailsModal(
-                                context: context,
-                                imageUrl: product.images[0].src.toString(),
-                                productName: product.name.toString(),
-                                productDescription:
-                                    product.description.toString(),
-                                price: product.price.toString(),
-                                id: product.id,
-                                variation: product.variations,
-                                attribute: product.attributes,
-                              );
+                             Get.toNamed(Routes.PRODUCTDETAILS, arguments: product);
                             },
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app/routes/app_pages.dart';
@@ -17,7 +18,8 @@ void main() async {
   String jsonData = prefs.getString('userrecord') ?? '';
   bool isLogin = jsonData.isNotEmpty;
   bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
-
+  Stripe.publishableKey = 'pk_test_51RmFfq4IO36cFGKwk9ot8KdbYWbGFhFq44wdli1fsMa8WExt27DQrCBr2WNDe2wTOwMKX91NYBkW4utUl3oN2ea600R3DNYS0F';
+  await Stripe.instance.applySettings();
   String initialRoute;
   if (isFirstTime) {
     initialRoute = '/onboarding';

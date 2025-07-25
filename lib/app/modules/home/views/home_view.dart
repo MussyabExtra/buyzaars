@@ -455,20 +455,10 @@ class HomeView extends GetView<HomeController> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: GestureDetector(
-                                  onTap: () {
-                                    print(product.description.toString());
-                                    productDetailsModal(
-                                      context: context,
-                                      imageUrl: product.images[0].src.toString(),
-                                      productName: product.name.toString(),
-                                      productDescription:
-                                          product.description.toString(),
-                                      price: product.price.toString(),
-                                      id: product.id,
-                                      variation: product.variations,
-                                      attribute: product.attributes,
-                                    );
-                                  },
+                                  onTap: () => Get.toNamed(
+                                    Routes.PRODUCTDETAILS,
+                                    arguments: product,
+                                  ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -481,9 +471,9 @@ class HomeView extends GetView<HomeController> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           image: DecorationImage(
-                                            image: CachedNetworkImageProvider(product
-                                                .images[0].src
-                                                .toString()),
+                                            image: CachedNetworkImageProvider(
+                                                product.images[0].src
+                                                    .toString()),
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -572,16 +562,15 @@ class CategoryBox extends StatelessWidget {
           padding: EdgeInsets.all(12),
           alignment: Alignment.bottomLeft,
           child: Html(
-            data:  title,
+            data: title,
             style: {
               "body": Style(
-                color: Colors.white,
-                fontSize: FontSize(14),
-                fontWeight: FontWeight.bold,
-                textOverflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                padding: HtmlPaddings.zero
-              ),
+                  color: Colors.white,
+                  fontSize: FontSize(14),
+                  fontWeight: FontWeight.bold,
+                  textOverflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  padding: HtmlPaddings.zero),
             },
             shrinkWrap: true,
             // TextStyle(

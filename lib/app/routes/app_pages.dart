@@ -14,6 +14,8 @@ import '../modules/category_products/bindings/category_products_binding.dart';
 import '../modules/category_products/views/category_products_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
+import '../modules/cproductdetails/bindings/cproductdetails_binding.dart';
+import '../modules/cproductdetails/views/cproductdetails_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -28,6 +30,8 @@ import '../modules/password_updated/bindings/password_updated_binding.dart';
 import '../modules/password_updated/views/password_updated_view.dart';
 import '../modules/privacy_policy/bindings/privacy_policy_binding.dart';
 import '../modules/privacy_policy/views/privacy_policy_view.dart';
+import '../modules/productdetails/bindings/productdetails_binding.dart';
+import '../modules/productdetails/views/productdetails_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/recovery_screen/bindings/recovery_screen_binding.dart';
@@ -148,6 +152,16 @@ class AppPages {
       name: _Paths.CATEGORY_PRODUCTS,
       page: () => const CategoryProductsView(),
       binding: CategoryProductsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCTDETAILS,
+      page: () => const ProductdetailsView(),
+      binding: ProductdetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.CPRODUCTDETAILS,
+      page: () => const CproductdetailsView(),
+      binding: CproductdetailsBinding(),
     ),
   ];
 }

@@ -1,3 +1,4 @@
+import 'package:buyzaars/app/routes/app_pages.dart';
 import 'package:buyzaars/widgets/productDetailModal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -101,16 +102,7 @@ class CategoryProductsView extends GetView<CategoryProductsController> {
                     child: GestureDetector(
                       onTap: () {
                         print(product.description.toString());
-                        productDetailsModal(
-                          context: context,
-                          imageUrl: product.images[0].src.toString(),
-                          productName: product.name.toString(),
-                          productDescription: product.description.toString(),
-                          price: product.price.toString(),
-                          id: product.id,
-                          variation: product.variations,
-                          attribute: product.attributes,
-                        );
+                        Get.toNamed(Routes.CPRODUCTDETAILS  , arguments: product);
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

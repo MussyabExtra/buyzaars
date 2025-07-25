@@ -41,7 +41,7 @@ class BottomNavView extends GetView<BottomNavController> {
           ],
         ),
         child: MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
           child: ClipRRect(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),

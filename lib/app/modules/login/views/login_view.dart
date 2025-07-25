@@ -161,7 +161,7 @@ class LoginView extends GetView<LoginController> {
                           //       ),
                           //     ),
                           //   ),
-                          // ),
+                          // ), 
                           SizedBox(height: 20),
                           Obx(
                             () => ElevatedButton(
@@ -204,25 +204,26 @@ class LoginView extends GetView<LoginController> {
                                 ),
                               ),
                               style: ButtonStyle(
-                                  shape: WidgetStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                  backgroundColor:
-                                      WidgetStateProperty.resolveWith<Color>(
-                                    (Set<WidgetState> states) {
-                                      if (states
-                                          .contains(WidgetState.disabled)) {
-                                        return const Color.fromARGB(
-                                            255, 155, 97, 97);
-                                      }
-                                      return AppColor.black;
-                                    },
-                                  ),
-                                  padding: WidgetStatePropertyAll(
-                                      const EdgeInsets.all(0))),
+                                ),
+                                backgroundColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                  (Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.disabled)) {
+                                      return const Color.fromARGB(
+                                          255, 155, 97, 97);
+                                    }
+                                    return AppColor.black;
+                                  },
+                                ),
+                                padding: WidgetStatePropertyAll(
+                                  const EdgeInsets.all(0),
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(height: 30),

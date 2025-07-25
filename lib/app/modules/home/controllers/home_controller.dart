@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:buyzaars/models/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wp_woocommerce/models/products.dart';
 import 'package:flutter_wp_woocommerce/utilities/local_db.dart';
 import 'package:flutter_wp_woocommerce/woocommerce.dart';
 import 'package:get/get.dart';
@@ -10,7 +8,6 @@ import 'package:http/http.dart' as http;
 import 'package:buyzaars/api_key.dart';
 // Update imports from letter_of_love to buyzaars
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../utilities/colors.dart';
 
 class HomeController extends GetxController {
