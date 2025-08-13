@@ -219,7 +219,6 @@ class ProductdetailsView extends GetView<ProductdetailsController> {
                   const SizedBox(height: 10),
 
                   // Rating
-                 
 
                   const SizedBox(height: 10),
 
@@ -245,8 +244,8 @@ class ProductdetailsView extends GetView<ProductdetailsController> {
 
                   const SizedBox(height: 20),
 
-                  // Add Attribute Selection
-                  if (controller.attribute!.isNotEmpty &&
+                  // Replace the existing attribute selection section with this:
+                  if (controller.filteredAttributes.isNotEmpty &&
                       controller.variation != [] &&
                       controller.variation != null &&
                       controller.variation!.isNotEmpty) ...[
@@ -259,7 +258,7 @@ class ProductdetailsView extends GetView<ProductdetailsController> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    ...controller.attribute!
+                    ...controller.filteredAttributes
                         .map((attr) => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -332,6 +331,7 @@ class ProductdetailsView extends GetView<ProductdetailsController> {
                             ))
                         .toList(),
                   ],
+
                   Row(
                     children: [
                       Expanded(
@@ -339,15 +339,17 @@ class ProductdetailsView extends GetView<ProductdetailsController> {
                           () => SizedBox(
                             height: 50,
                             child: ElevatedButton(
+                              // Update the add-to-cart button onPressed logic:
                               onPressed: Get.find<CartController>().loader.value
                                   ? null
                                   : () {
-                                      if (controller.attribute!.isNotEmpty &&
+                                      if (controller
+                                              .filteredAttributes.isNotEmpty &&
                                           controller.variation != [] &&
                                           controller.variation != null &&
                                           controller.variation!.isNotEmpty) {
                                         bool allSelected =
-                                            controller.attribute!.every(
+                                            controller.filteredAttributes.every(
                                           (attr) =>
                                               controller
                                                   .selectedAttributes[
@@ -394,6 +396,7 @@ class ProductdetailsView extends GetView<ProductdetailsController> {
                                         );
                                       }
                                     },
+
                               style: ElevatedButton.styleFrom(
                                 minimumSize: Size(double.infinity, 50),
                                 backgroundColor: AppColor.red,

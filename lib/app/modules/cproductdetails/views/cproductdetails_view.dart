@@ -246,93 +246,94 @@ class CproductdetailsView extends GetView<CproductdetailsController> {
 
                   const SizedBox(height: 20),
 
-                  // Add Attribute Selection
-                  if (controller.attribute!.isNotEmpty &&
-                      controller.variation != [] &&
-                      controller.variation != null &&
-                      controller.variation!.isNotEmpty) ...[
-                    Text(
-                      'Available Options',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    ...controller.attribute!
-                        .map((attr) => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  attr.name ?? '',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColor.black,
+                 // Replace the existing attribute selection section with this:
+if (controller.filteredAttributes.isNotEmpty &&
+    controller.variation != [] &&
+    controller.variation != null &&
+    controller.variation!.isNotEmpty) ...[
+  Text(
+    'Available Options',
+    style: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: AppColor.black,
+      fontSize: 18,
+    ),
+  ),
+  SizedBox(height: 10),
+  ...controller.filteredAttributes
+      .map((attr) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                attr.name ?? '',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.black,
+                ),
+              ),
+              SizedBox(height: 8),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: attr.options
+                          ?.map(
+                            (option) => Obx(() =>
+                                GestureDetector(
+                                  onTap: controller
+                                          .isvarloading.value
+                                      ? null
+                                      : () {
+                                          controller
+                                              .onAttributeSelected(
+                                                  attr.name!,
+                                                  option);
+                                        },
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        right: 10),
+                                    padding:
+                                        EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: controller
+                                                  .selectedAttributes[
+                                                      attr.name!]
+                                                  ?.value ==
+                                              option
+                                          ? AppColor.red
+                                          : Colors.grey[200],
+                                      borderRadius:
+                                          BorderRadius
+                                              .circular(20),
+                                    ),
+                                    child: Text(
+                                      option,
+                                      style: TextStyle(
+                                        color: controller
+                                                    .selectedAttributes[
+                                                        attr.name!]
+                                                    ?.value ==
+                                                option
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 8),
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: attr.options
-                                            ?.map(
-                                              (option) => Obx(() =>
-                                                  GestureDetector(
-                                                    onTap: controller
-                                                            .isvarloading.value
-                                                        ? null
-                                                        : () {
-                                                            controller
-                                                                .onAttributeSelected(
-                                                                    attr.name!,
-                                                                    option);
-                                                          },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 10),
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        horizontal: 16,
-                                                        vertical: 8,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        color: controller
-                                                                    .selectedAttributes[
-                                                                        attr.name!]
-                                                                    ?.value ==
-                                                                option
-                                                            ? AppColor.red
-                                                            : Colors.grey[200],
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                      ),
-                                                      child: Text(
-                                                        option,
-                                                        style: TextStyle(
-                                                          color: controller
-                                                                      .selectedAttributes[
-                                                                          attr.name!]
-                                                                      ?.value ==
-                                                                  option
-                                                              ? Colors.white
-                                                              : Colors.black,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )),
-                                            )
-                                            .toList() ??
-                                        [],
-                                  ),
-                                ),
-                                SizedBox(height: 16),
-                              ],
-                            ))
-                        .toList(),
-                  ],
+                                )),
+                          )
+                          .toList() ??
+                      [],
+                ),
+              ),
+              SizedBox(height: 16),
+            ],
+          ))
+      .toList(),
+],
+
                   Row(
                     children: [
                       Expanded(
@@ -340,61 +341,63 @@ class CproductdetailsView extends GetView<CproductdetailsController> {
                           () => SizedBox(
                             height: 50,
                             child: ElevatedButton(
-                              onPressed: Get.find<CartController>().loader.value
-                                  ? null
-                                  : () {
-                                      if (controller.attribute!.isNotEmpty &&
-                                          controller.variation != [] &&
-                                          controller.variation != null &&
-                                          controller.variation!.isNotEmpty) {
-                                        bool allSelected =
-                                            controller.attribute!.every(
-                                          (attr) =>
-                                              controller
-                                                  .selectedAttributes[
-                                                      attr.name!]
-                                                  ?.value
-                                                  .isNotEmpty ??
-                                              false,
-                                        );
+                              // Update the add-to-cart button onPressed logic:
+onPressed: Get.find<CartController>().loader.value
+    ? null
+    : () {
+        if (controller.filteredAttributes.isNotEmpty &&
+            controller.variation != [] &&
+            controller.variation != null &&
+            controller.variation!.isNotEmpty) {
+          bool allSelected =
+              controller.filteredAttributes.every(
+            (attr) =>
+                controller
+                    .selectedAttributes[
+                        attr.name!]
+                    ?.value
+                    .isNotEmpty ??
+                false,
+          );
 
-                                        if (!allSelected ||
-                                            controller
-                                                    .selectedVariation.value ==
-                                                null) {
-                                          Get.snackbar('Error',
-                                              'Please select a valid variation',
-                                              backgroundColor: Colors.red,
-                                              colorText: Colors.white);
-                                          return;
-                                        }
-                                      } else {
-                                        Get.find<CartController>().addToCart(
-                                          productId:
-                                              controller.product!.id.toString(),
-                                        );
-                                      }
+          if (!allSelected ||
+              controller
+                      .selectedVariation.value ==
+                  null) {
+            Get.snackbar('Error',
+                'Please select a valid variation',
+                backgroundColor: Colors.red,
+                colorText: Colors.white);
+            return;
+          }
+        } else {
+          Get.find<CartController>().addToCart(
+            productId:
+                controller.product!.id.toString(),
+          );
+        }
 
-                                      final varId = controller
-                                          .selectedVariation.value?.id;
+        final varId = controller
+            .selectedVariation.value?.id;
 
-                                      if (varId != null) {
-                                        final selectedAttrMaps = controller
-                                            .selectedVariation.value?.attributes
-                                            .map((attr) => {
-                                                  'attribute': attr.name,
-                                                  'value': attr.option,
-                                                })
-                                            .toList();
+        if (varId != null) {
+          final selectedAttrMaps = controller
+              .selectedVariation.value?.attributes
+              .map((attr) => {
+                    'attribute': attr.name,
+                    'value': attr.option,
+                  })
+              .toList();
 
-                                        Get.find<CartController>()
-                                            .addToCartWithVariation(
-                                          productId:
-                                              controller.product!.id.toString(),
-                                          variation: selectedAttrMaps,
-                                        );
-                                      }
-                                    },
+          Get.find<CartController>()
+              .addToCartWithVariation(
+            productId:
+                controller.product!.id.toString(),
+            variation: selectedAttrMaps,
+          );
+        }
+      },
+
                               style: ElevatedButton.styleFrom(
                                 minimumSize: Size(double.infinity, 50),
                                 backgroundColor: AppColor.red,

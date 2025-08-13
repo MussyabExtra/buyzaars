@@ -41,11 +41,31 @@ void onInit() {
   for (var attr in attribute ?? []) {
     selectedAttributes[attr.name!] = ''.obs;
   }
+  
+  // Auto-select single-option attributes
+  _autoSelectSingleOptionAttributes();
+  
   if(product!.variations!.isNotEmpty){
-    _fetchAllVariations(); // Load once
+    _fetchAllVariations();
   }
 }
 
+
+// Add this method to filter attributes with multiple options
+List<WooProductItemAttribute> get filteredAttributes {
+  return attribute?.where((attr) => 
+    attr.options != null && attr.options!.length > 1
+  ).toList() ?? [];
+}
+
+// Also add this method to auto-select single-option attributes
+void _autoSelectSingleOptionAttributes() {
+  for (var attr in attribute ?? []) {
+    if (attr.options != null && attr.options!.length == 1) {
+      selectedAttributes[attr.name!]?.value = attr.options!.first;
+    }
+  }
+}
 
 
 Future<void> _fetchAllVariations() async {
