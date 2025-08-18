@@ -441,7 +441,7 @@ class HomeView extends GetView<HomeController> {
                               return Container(
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.only(
-                                    top: 10, left: 2, right: 10, bottom: 10),
+                                    top: 10, left: 2, right: 10, bottom: 6),
                                 decoration: BoxDecoration(
                                   color: AppColor.white,
                                   boxShadow: [
