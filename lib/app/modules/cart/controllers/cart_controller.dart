@@ -131,6 +131,10 @@ class CartController extends GetxController {
         Get.snackbar("Out of Stock", "Product is out of stock.",
             backgroundColor: Colors.red, colorText: Colors.white);
        }
+      if(e.toString().contains("woocommerce_rest_product_not_purchasable")){
+        Get.snackbar("Out of Stock", "Product is out of stock.",
+            backgroundColor: AppColor.secondaryColor, colorText: Colors.white);
+      }
     } finally {
       isLoading.value = false;
       loader.value = false;
@@ -151,6 +155,10 @@ class CartController extends GetxController {
         Get.snackbar("Out of Stock", "Product is out of stock.",
             backgroundColor: Colors.red, colorText: Colors.white);
        }
+      if(e.toString().contains("woocommerce_rest_product_not_purchasable")){
+        Get.snackbar("Out of Stock", "Product is out of stock.",
+            backgroundColor: AppColor.secondaryColor, colorText: Colors.white);
+      }
     } finally {
       itemLoading[key] = false;
     }
@@ -199,9 +207,20 @@ Future<void> addToCartWithVariation({
     Get.snackbar("Added", "Product added to cart successfully.",
         backgroundColor: AppColor.red, colorText: Colors.white);
     } else {
-      Get.snackbar("Error", "Failed to add product to cart.",
-          backgroundColor: Colors.red, colorText: Colors.white);
-    }
+    //   Get.snackbar("Error", "Failed to add product to cart.",
+    //       backgroundColor: Colors.red, colorText: Colors.white);
+      //out of stock
+      if(response.body.toString().contains("out of stock")){
+        Get.snackbar("Out of Stock", "Product is out of stock.",
+            backgroundColor: AppColor.primarycolor, colorText: Colors.white);
+      }
+      if(response.body.toString().contains("woocommerce_rest_product_not_purchasable")){
+        Get.snackbar("Out of Stock", "Product is out of stock.",
+            backgroundColor: AppColor.primarycolor, colorText: Colors.white);
+      }
+
+     }
+
     print('Response status: ${response.body}');
     // await woocommerce.addToMyCart(
     //   itemId: productId,

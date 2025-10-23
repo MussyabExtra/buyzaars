@@ -47,3 +47,8 @@ void main() async {
     ),
   );
 }
+
+// storePassword=buyzaarsapp
+// keyPassword=buyzaarsapp
+// keyAlias=upload
+// storeFile=../app/upload-keystore.jks
